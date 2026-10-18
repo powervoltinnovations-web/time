@@ -1,0 +1,2749 @@
+{
+  "teachers": [
+    {
+      "id": "t3_0",
+      "name": "Dr.Vidya Kubde",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty30@example.edu",
+      "short_code": "F30",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_1",
+      "name": "Dr.R. V. Bhaskarwar",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty31@example.edu",
+      "short_code": "F31",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt3_1",
+      "name": "Mrs. A. D. Mhatre",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab31@example.edu",
+      "short_code": "L31",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_2",
+      "name": "Mrs. G.M.Arwindekar",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty32@example.edu",
+      "short_code": "F32",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt3_2",
+      "name": "Mr.J. R. Gaidhane",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab32@example.edu",
+      "short_code": "L32",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_3",
+      "name": "Dr. R.A.Jolhe",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty33@example.edu",
+      "short_code": "F33",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_4",
+      "name": "Ms. D. P. Kadam",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty34@example.edu",
+      "short_code": "F34",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt3_4",
+      "name": "Mr. S. U. Kumane",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab34@example.edu",
+      "short_code": "L34",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_5",
+      "name": "Mrs. K. P. Rane",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty35@example.edu",
+      "short_code": "F35",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_6",
+      "name": "Mrs. H. A.Khot",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty36@example.edu",
+      "short_code": "F36",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t3_7",
+      "name": "Mrs. A. R. Rahude",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty37@example.edu",
+      "short_code": "F37",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_0",
+      "name": "Mrs. N.Y. Moharkar",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty50@example.edu",
+      "short_code": "F50",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_1",
+      "name": "Mrs. J. S. Phonde",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty51@example.edu",
+      "short_code": "F51",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt5_1",
+      "name": "Mr. Krushna Jadhav",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab51@example.edu",
+      "short_code": "L51",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_2",
+      "name": "Mrs. Angel Bency",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty52@example.edu",
+      "short_code": "F52",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt5_2",
+      "name": "Mrs. Karishma Shelar",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab52@example.edu",
+      "short_code": "L52",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_3",
+      "name": "Mrs. Vaishali Korade",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty53@example.edu",
+      "short_code": "F53",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_4",
+      "name": "Pallavi M.N.",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty54@example.edu",
+      "short_code": "F54",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt5_4",
+      "name": "Bipasha",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab54@example.edu",
+      "short_code": "L54",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_5",
+      "name": "Priya Jadhav",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty55@example.edu",
+      "short_code": "F55",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_6",
+      "name": "Pankaj Rathod",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty56@example.edu",
+      "short_code": "F56",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t5_7",
+      "name": "Harshali Vihire",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty57@example.edu",
+      "short_code": "F57",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_0",
+      "name": "Reshma",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty70@example.edu",
+      "short_code": "F70",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_1",
+      "name": "Sample Professor 01",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty71@example.edu",
+      "short_code": "F71",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt7_1",
+      "name": "Sample Professor 02",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab71@example.edu",
+      "short_code": "L71",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_2",
+      "name": "Sample Professor 03",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty72@example.edu",
+      "short_code": "F72",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt7_2",
+      "name": "Sample Professor 04",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab72@example.edu",
+      "short_code": "L72",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_3",
+      "name": "Sample Professor 05",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty73@example.edu",
+      "short_code": "F73",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_4",
+      "name": "Sample Professor 06",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty74@example.edu",
+      "short_code": "F74",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "lt7_4",
+      "name": "Sample Professor 07",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "lab74@example.edu",
+      "short_code": "L74",
+      "max_daily_slots": 6,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_5",
+      "name": "Sample Professor 08",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty75@example.edu",
+      "short_code": "F75",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_6",
+      "name": "Sample Professor 09",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty76@example.edu",
+      "short_code": "F76",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    },
+    {
+      "id": "t7_7",
+      "name": "Sample Professor 10",
+      "max_hours": 20,
+      "department_id": "it",
+      "email": "faculty77@example.edu",
+      "short_code": "F77",
+      "max_daily_slots": 5,
+      "lab_eligible": true,
+      "arrival": "09:00",
+      "departure": "17:45"
+    }
+  ],
+  "subjects": [
+    {
+      "id": "IT301",
+      "name": "Engineering Mathematics III",
+      "code": "IT301",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT302",
+      "name": "Data Structures",
+      "code": "IT302",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT303",
+      "name": "Database Management Systems",
+      "code": "IT303",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT304",
+      "name": "Digital Logic & Architecture",
+      "code": "IT304",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT305",
+      "name": "Object-Oriented Programming",
+      "code": "IT305",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 5
+    },
+    {
+      "id": "IT306",
+      "name": "Discrete Mathematics",
+      "code": "IT306",
+      "semester": 3,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 3
+    },
+    {
+      "id": "ITE301",
+      "name": "Web Technology",
+      "code": "ITE301",
+      "semester": 3,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es3",
+      "course_type": "theory",
+      "weekly_hours": 2
+    },
+    {
+      "id": "ITE302",
+      "name": "Human Computer Interaction",
+      "code": "ITE302",
+      "semester": 3,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es3",
+      "course_type": "theory",
+      "weekly_hours": 2
+    },
+    {
+      "id": "IT501",
+      "name": "Operating Systems",
+      "code": "IT501",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT502",
+      "name": "Computer Networks",
+      "code": "IT502",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT503",
+      "name": "Software Engineering",
+      "code": "IT503",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT504",
+      "name": "Automata & Compiler Design",
+      "code": "IT504",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT505",
+      "name": "Advanced Database Systems",
+      "code": "IT505",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 5
+    },
+    {
+      "id": "IT506",
+      "name": "Information Security",
+      "code": "IT506",
+      "semester": 5,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 3
+    },
+    {
+      "id": "ITE501",
+      "name": "Artificial Intelligence",
+      "code": "ITE501",
+      "semester": 5,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es5",
+      "course_type": "theory",
+      "weekly_hours": 2
+    },
+    {
+      "id": "ITE502",
+      "name": "Cloud Fundamentals",
+      "code": "ITE502",
+      "semester": 5,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es5",
+      "course_type": "theory",
+      "weekly_hours": 2
+    },
+    {
+      "id": "IT701",
+      "name": "Machine Learning",
+      "code": "IT701",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT702",
+      "name": "Big Data Analytics",
+      "code": "IT702",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT703",
+      "name": "Cloud Computing",
+      "code": "IT703",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 6
+    },
+    {
+      "id": "IT704",
+      "name": "Distributed Systems",
+      "code": "IT704",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 4
+    },
+    {
+      "id": "IT705",
+      "name": "Cyber Security",
+      "code": "IT705",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "mixed",
+      "weekly_hours": 5
+    },
+    {
+      "id": "IT706",
+      "name": "DevOps & Software Architecture",
+      "code": "IT706",
+      "semester": 7,
+      "elective": false,
+      "department_id": "it",
+      "elective_set_id": null,
+      "course_type": "theory",
+      "weekly_hours": 3
+    },
+    {
+      "id": "ITE701",
+      "name": "Internet of Things",
+      "code": "ITE701",
+      "semester": 7,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es7",
+      "course_type": "theory",
+      "weekly_hours": 2
+    },
+    {
+      "id": "ITE702",
+      "name": "Blockchain Technology",
+      "code": "ITE702",
+      "semester": 7,
+      "elective": true,
+      "department_id": "it",
+      "elective_set_id": "es7",
+      "course_type": "theory",
+      "weekly_hours": 2
+    }
+  ],
+  "rooms": [
+    {
+      "id": "cr1",
+      "name": "IT-301",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr2",
+      "name": "IT-302",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr3",
+      "name": "IT-303",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr4",
+      "name": "IT-304",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr5",
+      "name": "IT-305",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr6",
+      "name": "IT-306",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "cr7",
+      "name": "IT-307",
+      "kind": "classroom",
+      "capacity": 70,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab1",
+      "name": "IT Shared Lab 1",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab2",
+      "name": "IT Shared Lab 2",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab3",
+      "name": "IT Shared Lab 3",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab4",
+      "name": "IT Shared Lab 4",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab5",
+      "name": "IT Shared Lab 5",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    },
+    {
+      "id": "lab6",
+      "name": "IT Shared Lab 6",
+      "kind": "lab",
+      "capacity": 20,
+      "department_id": "it",
+      "eligible_years": []
+    }
+  ],
+  "groups": [
+    {
+      "id": "it3A",
+      "semester": 3,
+      "division": "A",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it3B",
+      "semester": 3,
+      "division": "B",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it3C",
+      "semester": 3,
+      "division": "C",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it5A",
+      "semester": 5,
+      "division": "A",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it5B",
+      "semester": 5,
+      "division": "B",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it5C",
+      "semester": 5,
+      "division": "C",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it7A",
+      "semester": 7,
+      "division": "A",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it7B",
+      "semester": 7,
+      "division": "B",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    },
+    {
+      "id": "it7C",
+      "semester": 7,
+      "division": "C",
+      "room_id": null,
+      "department_id": "it",
+      "strength": 60
+    }
+  ],
+  "offerings": [
+    {
+      "id": "IT301_A",
+      "group_id": "it3A",
+      "subject_id": "IT301",
+      "teacher_id": "t3_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT301_B",
+      "group_id": "it3B",
+      "subject_id": "IT301",
+      "teacher_id": "t3_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT301_C",
+      "group_id": "it3C",
+      "subject_id": "IT301",
+      "teacher_id": "t3_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT302_A",
+      "group_id": "it3A",
+      "subject_id": "IT302",
+      "teacher_id": "t3_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT302_A_b1",
+      "group_id": "it3A",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3A1"
+    },
+    {
+      "id": "IT302_A_b2",
+      "group_id": "it3A",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3A2"
+    },
+    {
+      "id": "IT302_A_b3",
+      "group_id": "it3A",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3A3"
+    },
+    {
+      "id": "IT302_B",
+      "group_id": "it3B",
+      "subject_id": "IT302",
+      "teacher_id": "t3_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT302_B_b1",
+      "group_id": "it3B",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it3B1"
+    },
+    {
+      "id": "IT302_B_b2",
+      "group_id": "it3B",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it3B2"
+    },
+    {
+      "id": "IT302_B_b3",
+      "group_id": "it3B",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it3B3"
+    },
+    {
+      "id": "IT302_C",
+      "group_id": "it3C",
+      "subject_id": "IT302",
+      "teacher_id": "t3_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT302_C_b1",
+      "group_id": "it3C",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3C1"
+    },
+    {
+      "id": "IT302_C_b2",
+      "group_id": "it3C",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3C2"
+    },
+    {
+      "id": "IT302_C_b3",
+      "group_id": "it3C",
+      "subject_id": "IT302",
+      "teacher_id": "lt3_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3C3"
+    },
+    {
+      "id": "IT303_A",
+      "group_id": "it3A",
+      "subject_id": "IT303",
+      "teacher_id": "t3_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT303_A_b1",
+      "group_id": "it3A",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3A1"
+    },
+    {
+      "id": "IT303_A_b2",
+      "group_id": "it3A",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3A2"
+    },
+    {
+      "id": "IT303_A_b3",
+      "group_id": "it3A",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3A3"
+    },
+    {
+      "id": "IT303_B",
+      "group_id": "it3B",
+      "subject_id": "IT303",
+      "teacher_id": "t3_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT303_B_b1",
+      "group_id": "it3B",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it3B1"
+    },
+    {
+      "id": "IT303_B_b2",
+      "group_id": "it3B",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it3B2"
+    },
+    {
+      "id": "IT303_B_b3",
+      "group_id": "it3B",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it3B3"
+    },
+    {
+      "id": "IT303_C",
+      "group_id": "it3C",
+      "subject_id": "IT303",
+      "teacher_id": "t3_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT303_C_b1",
+      "group_id": "it3C",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3C1"
+    },
+    {
+      "id": "IT303_C_b2",
+      "group_id": "it3C",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3C2"
+    },
+    {
+      "id": "IT303_C_b3",
+      "group_id": "it3C",
+      "subject_id": "IT303",
+      "teacher_id": "lt3_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3C3"
+    },
+    {
+      "id": "IT304_A",
+      "group_id": "it3A",
+      "subject_id": "IT304",
+      "teacher_id": "t3_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT304_B",
+      "group_id": "it3B",
+      "subject_id": "IT304",
+      "teacher_id": "t3_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT304_C",
+      "group_id": "it3C",
+      "subject_id": "IT304",
+      "teacher_id": "t3_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT305_A",
+      "group_id": "it3A",
+      "subject_id": "IT305",
+      "teacher_id": "t3_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT305_A_b1",
+      "group_id": "it3A",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3A1"
+    },
+    {
+      "id": "IT305_A_b2",
+      "group_id": "it3A",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3A2"
+    },
+    {
+      "id": "IT305_A_b3",
+      "group_id": "it3A",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3A3"
+    },
+    {
+      "id": "IT305_B",
+      "group_id": "it3B",
+      "subject_id": "IT305",
+      "teacher_id": "t3_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT305_B_b1",
+      "group_id": "it3B",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it3B1"
+    },
+    {
+      "id": "IT305_B_b2",
+      "group_id": "it3B",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it3B2"
+    },
+    {
+      "id": "IT305_B_b3",
+      "group_id": "it3B",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it3B3"
+    },
+    {
+      "id": "IT305_C",
+      "group_id": "it3C",
+      "subject_id": "IT305",
+      "teacher_id": "t3_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT305_C_b1",
+      "group_id": "it3C",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it3C1"
+    },
+    {
+      "id": "IT305_C_b2",
+      "group_id": "it3C",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it3C2"
+    },
+    {
+      "id": "IT305_C_b3",
+      "group_id": "it3C",
+      "subject_id": "IT305",
+      "teacher_id": "lt3_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it3C3"
+    },
+    {
+      "id": "IT306_A",
+      "group_id": "it3A",
+      "subject_id": "IT306",
+      "teacher_id": "t3_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT306_B",
+      "group_id": "it3B",
+      "subject_id": "IT306",
+      "teacher_id": "t3_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT306_C",
+      "group_id": "it3C",
+      "subject_id": "IT306",
+      "teacher_id": "t3_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE301_A",
+      "group_id": "it3A",
+      "subject_id": "ITE301",
+      "teacher_id": "t3_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE301_B",
+      "group_id": "it3B",
+      "subject_id": "ITE301",
+      "teacher_id": "t3_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE301_C",
+      "group_id": "it3C",
+      "subject_id": "ITE301",
+      "teacher_id": "t3_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE302_A",
+      "group_id": "it3A",
+      "subject_id": "ITE302",
+      "teacher_id": "t3_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE302_B",
+      "group_id": "it3B",
+      "subject_id": "ITE302",
+      "teacher_id": "t3_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE302_C",
+      "group_id": "it3C",
+      "subject_id": "ITE302",
+      "teacher_id": "t3_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT501_A",
+      "group_id": "it5A",
+      "subject_id": "IT501",
+      "teacher_id": "t5_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT501_B",
+      "group_id": "it5B",
+      "subject_id": "IT501",
+      "teacher_id": "t5_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT501_C",
+      "group_id": "it5C",
+      "subject_id": "IT501",
+      "teacher_id": "t5_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT502_A",
+      "group_id": "it5A",
+      "subject_id": "IT502",
+      "teacher_id": "t5_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT502_A_b1",
+      "group_id": "it5A",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5A1"
+    },
+    {
+      "id": "IT502_A_b2",
+      "group_id": "it5A",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5A2"
+    },
+    {
+      "id": "IT502_A_b3",
+      "group_id": "it5A",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5A3"
+    },
+    {
+      "id": "IT502_B",
+      "group_id": "it5B",
+      "subject_id": "IT502",
+      "teacher_id": "t5_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT502_B_b1",
+      "group_id": "it5B",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it5B1"
+    },
+    {
+      "id": "IT502_B_b2",
+      "group_id": "it5B",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it5B2"
+    },
+    {
+      "id": "IT502_B_b3",
+      "group_id": "it5B",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it5B3"
+    },
+    {
+      "id": "IT502_C",
+      "group_id": "it5C",
+      "subject_id": "IT502",
+      "teacher_id": "t5_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT502_C_b1",
+      "group_id": "it5C",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5C1"
+    },
+    {
+      "id": "IT502_C_b2",
+      "group_id": "it5C",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5C2"
+    },
+    {
+      "id": "IT502_C_b3",
+      "group_id": "it5C",
+      "subject_id": "IT502",
+      "teacher_id": "lt5_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5C3"
+    },
+    {
+      "id": "IT503_A",
+      "group_id": "it5A",
+      "subject_id": "IT503",
+      "teacher_id": "t5_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT503_A_b1",
+      "group_id": "it5A",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5A1"
+    },
+    {
+      "id": "IT503_A_b2",
+      "group_id": "it5A",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5A2"
+    },
+    {
+      "id": "IT503_A_b3",
+      "group_id": "it5A",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5A3"
+    },
+    {
+      "id": "IT503_B",
+      "group_id": "it5B",
+      "subject_id": "IT503",
+      "teacher_id": "t5_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT503_B_b1",
+      "group_id": "it5B",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it5B1"
+    },
+    {
+      "id": "IT503_B_b2",
+      "group_id": "it5B",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it5B2"
+    },
+    {
+      "id": "IT503_B_b3",
+      "group_id": "it5B",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it5B3"
+    },
+    {
+      "id": "IT503_C",
+      "group_id": "it5C",
+      "subject_id": "IT503",
+      "teacher_id": "t5_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT503_C_b1",
+      "group_id": "it5C",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5C1"
+    },
+    {
+      "id": "IT503_C_b2",
+      "group_id": "it5C",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5C2"
+    },
+    {
+      "id": "IT503_C_b3",
+      "group_id": "it5C",
+      "subject_id": "IT503",
+      "teacher_id": "lt5_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5C3"
+    },
+    {
+      "id": "IT504_A",
+      "group_id": "it5A",
+      "subject_id": "IT504",
+      "teacher_id": "t5_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT504_B",
+      "group_id": "it5B",
+      "subject_id": "IT504",
+      "teacher_id": "t5_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT504_C",
+      "group_id": "it5C",
+      "subject_id": "IT504",
+      "teacher_id": "t5_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT505_A",
+      "group_id": "it5A",
+      "subject_id": "IT505",
+      "teacher_id": "t5_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT505_A_b1",
+      "group_id": "it5A",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5A1"
+    },
+    {
+      "id": "IT505_A_b2",
+      "group_id": "it5A",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5A2"
+    },
+    {
+      "id": "IT505_A_b3",
+      "group_id": "it5A",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5A3"
+    },
+    {
+      "id": "IT505_B",
+      "group_id": "it5B",
+      "subject_id": "IT505",
+      "teacher_id": "t5_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT505_B_b1",
+      "group_id": "it5B",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it5B1"
+    },
+    {
+      "id": "IT505_B_b2",
+      "group_id": "it5B",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it5B2"
+    },
+    {
+      "id": "IT505_B_b3",
+      "group_id": "it5B",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it5B3"
+    },
+    {
+      "id": "IT505_C",
+      "group_id": "it5C",
+      "subject_id": "IT505",
+      "teacher_id": "t5_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT505_C_b1",
+      "group_id": "it5C",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it5C1"
+    },
+    {
+      "id": "IT505_C_b2",
+      "group_id": "it5C",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it5C2"
+    },
+    {
+      "id": "IT505_C_b3",
+      "group_id": "it5C",
+      "subject_id": "IT505",
+      "teacher_id": "lt5_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it5C3"
+    },
+    {
+      "id": "IT506_A",
+      "group_id": "it5A",
+      "subject_id": "IT506",
+      "teacher_id": "t5_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT506_B",
+      "group_id": "it5B",
+      "subject_id": "IT506",
+      "teacher_id": "t5_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT506_C",
+      "group_id": "it5C",
+      "subject_id": "IT506",
+      "teacher_id": "t5_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE501_A",
+      "group_id": "it5A",
+      "subject_id": "ITE501",
+      "teacher_id": "t5_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE501_B",
+      "group_id": "it5B",
+      "subject_id": "ITE501",
+      "teacher_id": "t5_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE501_C",
+      "group_id": "it5C",
+      "subject_id": "ITE501",
+      "teacher_id": "t5_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE502_A",
+      "group_id": "it5A",
+      "subject_id": "ITE502",
+      "teacher_id": "t5_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE502_B",
+      "group_id": "it5B",
+      "subject_id": "ITE502",
+      "teacher_id": "t5_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE502_C",
+      "group_id": "it5C",
+      "subject_id": "ITE502",
+      "teacher_id": "t5_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT701_A",
+      "group_id": "it7A",
+      "subject_id": "IT701",
+      "teacher_id": "t7_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT701_B",
+      "group_id": "it7B",
+      "subject_id": "IT701",
+      "teacher_id": "t7_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT701_C",
+      "group_id": "it7C",
+      "subject_id": "IT701",
+      "teacher_id": "t7_0",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT702_A",
+      "group_id": "it7A",
+      "subject_id": "IT702",
+      "teacher_id": "t7_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT702_A_b1",
+      "group_id": "it7A",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7A1"
+    },
+    {
+      "id": "IT702_A_b2",
+      "group_id": "it7A",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7A2"
+    },
+    {
+      "id": "IT702_A_b3",
+      "group_id": "it7A",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7A3"
+    },
+    {
+      "id": "IT702_B",
+      "group_id": "it7B",
+      "subject_id": "IT702",
+      "teacher_id": "t7_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT702_B_b1",
+      "group_id": "it7B",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it7B1"
+    },
+    {
+      "id": "IT702_B_b2",
+      "group_id": "it7B",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it7B2"
+    },
+    {
+      "id": "IT702_B_b3",
+      "group_id": "it7B",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it7B3"
+    },
+    {
+      "id": "IT702_C",
+      "group_id": "it7C",
+      "subject_id": "IT702",
+      "teacher_id": "t7_1",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT702_C_b1",
+      "group_id": "it7C",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7C1"
+    },
+    {
+      "id": "IT702_C_b2",
+      "group_id": "it7C",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7C2"
+    },
+    {
+      "id": "IT702_C_b3",
+      "group_id": "it7C",
+      "subject_id": "IT702",
+      "teacher_id": "lt7_1",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7C3"
+    },
+    {
+      "id": "IT703_A",
+      "group_id": "it7A",
+      "subject_id": "IT703",
+      "teacher_id": "t7_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT703_A_b1",
+      "group_id": "it7A",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7A1"
+    },
+    {
+      "id": "IT703_A_b2",
+      "group_id": "it7A",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7A2"
+    },
+    {
+      "id": "IT703_A_b3",
+      "group_id": "it7A",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7A3"
+    },
+    {
+      "id": "IT703_B",
+      "group_id": "it7B",
+      "subject_id": "IT703",
+      "teacher_id": "t7_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT703_B_b1",
+      "group_id": "it7B",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it7B1"
+    },
+    {
+      "id": "IT703_B_b2",
+      "group_id": "it7B",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it7B2"
+    },
+    {
+      "id": "IT703_B_b3",
+      "group_id": "it7B",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it7B3"
+    },
+    {
+      "id": "IT703_C",
+      "group_id": "it7C",
+      "subject_id": "IT703",
+      "teacher_id": "t7_2",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT703_C_b1",
+      "group_id": "it7C",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7C1"
+    },
+    {
+      "id": "IT703_C_b2",
+      "group_id": "it7C",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7C2"
+    },
+    {
+      "id": "IT703_C_b3",
+      "group_id": "it7C",
+      "subject_id": "IT703",
+      "teacher_id": "lt7_2",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7C3"
+    },
+    {
+      "id": "IT704_A",
+      "group_id": "it7A",
+      "subject_id": "IT704",
+      "teacher_id": "t7_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT704_B",
+      "group_id": "it7B",
+      "subject_id": "IT704",
+      "teacher_id": "t7_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT704_C",
+      "group_id": "it7C",
+      "subject_id": "IT704",
+      "teacher_id": "t7_3",
+      "lectures": 4,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT705_A",
+      "group_id": "it7A",
+      "subject_id": "IT705",
+      "teacher_id": "t7_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT705_A_b1",
+      "group_id": "it7A",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7A1"
+    },
+    {
+      "id": "IT705_A_b2",
+      "group_id": "it7A",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7A2"
+    },
+    {
+      "id": "IT705_A_b3",
+      "group_id": "it7A",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7A3"
+    },
+    {
+      "id": "IT705_B",
+      "group_id": "it7B",
+      "subject_id": "IT705",
+      "teacher_id": "t7_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT705_B_b1",
+      "group_id": "it7B",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab1",
+      "projects": 0,
+      "batch_id": "it7B1"
+    },
+    {
+      "id": "IT705_B_b2",
+      "group_id": "it7B",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab2",
+      "projects": 0,
+      "batch_id": "it7B2"
+    },
+    {
+      "id": "IT705_B_b3",
+      "group_id": "it7B",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab3",
+      "projects": 0,
+      "batch_id": "it7B3"
+    },
+    {
+      "id": "IT705_C",
+      "group_id": "it7C",
+      "subject_id": "IT705",
+      "teacher_id": "t7_4",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT705_C_b1",
+      "group_id": "it7C",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab4",
+      "projects": 0,
+      "batch_id": "it7C1"
+    },
+    {
+      "id": "IT705_C_b2",
+      "group_id": "it7C",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab5",
+      "projects": 0,
+      "batch_id": "it7C2"
+    },
+    {
+      "id": "IT705_C_b3",
+      "group_id": "it7C",
+      "subject_id": "IT705",
+      "teacher_id": "lt7_4",
+      "lectures": 0,
+      "labs": 1,
+      "lab_room_id": "lab6",
+      "projects": 0,
+      "batch_id": "it7C3"
+    },
+    {
+      "id": "IT706_A",
+      "group_id": "it7A",
+      "subject_id": "IT706",
+      "teacher_id": "t7_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT706_B",
+      "group_id": "it7B",
+      "subject_id": "IT706",
+      "teacher_id": "t7_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "IT706_C",
+      "group_id": "it7C",
+      "subject_id": "IT706",
+      "teacher_id": "t7_5",
+      "lectures": 3,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE701_A",
+      "group_id": "it7A",
+      "subject_id": "ITE701",
+      "teacher_id": "t7_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE701_B",
+      "group_id": "it7B",
+      "subject_id": "ITE701",
+      "teacher_id": "t7_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE701_C",
+      "group_id": "it7C",
+      "subject_id": "ITE701",
+      "teacher_id": "t7_6",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE702_A",
+      "group_id": "it7A",
+      "subject_id": "ITE702",
+      "teacher_id": "t7_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE702_B",
+      "group_id": "it7B",
+      "subject_id": "ITE702",
+      "teacher_id": "t7_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    },
+    {
+      "id": "ITE702_C",
+      "group_id": "it7C",
+      "subject_id": "ITE702",
+      "teacher_id": "t7_7",
+      "lectures": 2,
+      "labs": 0,
+      "lab_room_id": null,
+      "projects": 0,
+      "batch_id": null
+    }
+  ],
+  "departments": [
+    {
+      "id": "it",
+      "name": "Information Technology",
+      "code": "IT"
+    }
+  ],
+  "batches": [
+    {
+      "id": "it3A1",
+      "group_id": "it3A",
+      "name": "A1",
+      "strength": 20
+    },
+    {
+      "id": "it3A2",
+      "group_id": "it3A",
+      "name": "A2",
+      "strength": 20
+    },
+    {
+      "id": "it3A3",
+      "group_id": "it3A",
+      "name": "A3",
+      "strength": 20
+    },
+    {
+      "id": "it3B1",
+      "group_id": "it3B",
+      "name": "B1",
+      "strength": 20
+    },
+    {
+      "id": "it3B2",
+      "group_id": "it3B",
+      "name": "B2",
+      "strength": 20
+    },
+    {
+      "id": "it3B3",
+      "group_id": "it3B",
+      "name": "B3",
+      "strength": 20
+    },
+    {
+      "id": "it3C1",
+      "group_id": "it3C",
+      "name": "C1",
+      "strength": 20
+    },
+    {
+      "id": "it3C2",
+      "group_id": "it3C",
+      "name": "C2",
+      "strength": 20
+    },
+    {
+      "id": "it3C3",
+      "group_id": "it3C",
+      "name": "C3",
+      "strength": 20
+    },
+    {
+      "id": "it5A1",
+      "group_id": "it5A",
+      "name": "A1",
+      "strength": 20
+    },
+    {
+      "id": "it5A2",
+      "group_id": "it5A",
+      "name": "A2",
+      "strength": 20
+    },
+    {
+      "id": "it5A3",
+      "group_id": "it5A",
+      "name": "A3",
+      "strength": 20
+    },
+    {
+      "id": "it5B1",
+      "group_id": "it5B",
+      "name": "B1",
+      "strength": 20
+    },
+    {
+      "id": "it5B2",
+      "group_id": "it5B",
+      "name": "B2",
+      "strength": 20
+    },
+    {
+      "id": "it5B3",
+      "group_id": "it5B",
+      "name": "B3",
+      "strength": 20
+    },
+    {
+      "id": "it5C1",
+      "group_id": "it5C",
+      "name": "C1",
+      "strength": 20
+    },
+    {
+      "id": "it5C2",
+      "group_id": "it5C",
+      "name": "C2",
+      "strength": 20
+    },
+    {
+      "id": "it5C3",
+      "group_id": "it5C",
+      "name": "C3",
+      "strength": 20
+    },
+    {
+      "id": "it7A1",
+      "group_id": "it7A",
+      "name": "A1",
+      "strength": 20
+    },
+    {
+      "id": "it7A2",
+      "group_id": "it7A",
+      "name": "A2",
+      "strength": 20
+    },
+    {
+      "id": "it7A3",
+      "group_id": "it7A",
+      "name": "A3",
+      "strength": 20
+    },
+    {
+      "id": "it7B1",
+      "group_id": "it7B",
+      "name": "B1",
+      "strength": 20
+    },
+    {
+      "id": "it7B2",
+      "group_id": "it7B",
+      "name": "B2",
+      "strength": 20
+    },
+    {
+      "id": "it7B3",
+      "group_id": "it7B",
+      "name": "B3",
+      "strength": 20
+    },
+    {
+      "id": "it7C1",
+      "group_id": "it7C",
+      "name": "C1",
+      "strength": 20
+    },
+    {
+      "id": "it7C2",
+      "group_id": "it7C",
+      "name": "C2",
+      "strength": 20
+    },
+    {
+      "id": "it7C3",
+      "group_id": "it7C",
+      "name": "C3",
+      "strength": 20
+    }
+  ],
+  "elective_sets": [
+    {
+      "id": "es3",
+      "name": "Professional Electives – Semester 3",
+      "code": "PE-3",
+      "department_id": "it",
+      "semester": 3
+    },
+    {
+      "id": "es5",
+      "name": "Professional Electives – Semester 5",
+      "code": "PE-5",
+      "department_id": "it",
+      "semester": 5
+    },
+    {
+      "id": "es7",
+      "name": "Professional Electives – Semester 7",
+      "code": "PE-7",
+      "department_id": "it",
+      "semester": 7
+    }
+  ],
+  "settings": {
+    "start": "09:00",
+    "end": "17:45",
+    "period_minutes": 60,
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "breaks": [
+      {
+        "name": "Recess",
+        "start": "13:00",
+        "duration": 45
+      }
+    ],
+    "blocked": [],
+    "spread_lectures": true,
+    "lecture_slots": 1,
+    "lab_slots": 2,
+    "project_slots": 4
+  }
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5146d9">
+  <meta name="description" content="UniSched — university timetable planning for Datta Meghe College of Engineering, Airoli, Navi Mumbai.">
+  <title>UniSched · Campus, in sync.</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+  <script src="/static/workspace.js" defer></script>
+  <script src="/static/editing.js" defer></script>
+  <script src="/static/projects.js" defer></script>
+  <script src="/static/assistant.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#overview" aria-label="UniSched home"><span class="brand-symbol">u<span></span></span><span>UniSched<small>CAMPUS, IN SYNC.</small></span></a>
+    <div class="workspace-switch"><span class="college-mark">DM</span><div>DMCE, Airoli<small>Academic workspace</small></div><span class="workspace-dot"></span></div>
+    <p class="nav-label">WORKSPACE</p>
+    <nav aria-label="Main navigation">
+      <a href="#overview" data-page="overview"><i data-icon="dashboard"></i>Overview</a>
+      <a href="#timetables" data-page="timetables"><i data-icon="calendar"></i>Timetables<span class="nav-count" id="schedule-count">0</span></a>
+      <a href="#generate" data-page="generate"><i data-icon="spark"></i>Generate by division</a>
+      <a href="#setup" data-page="setup"><i data-icon="sliders"></i>Academic setup</a>
+      <a href="#subjects" data-page="subjects"><i data-icon="book"></i>Subjects & courses</a>
+      <a href="#departments" data-page="departments"><i data-icon="building"></i>Departments</a>
+      <a href="#projects" data-page="projects"><i data-icon="book"></i>Mini projects</a>
+      <a href="#assistant" data-page="assistant"><i data-icon="spark"></i>AI chat assistant</a>
+      <a href="#workload" data-page="workload"><i data-icon="users"></i>Faculty workload</a>
+      <a href="#timings" data-page="timings"><i data-icon="clock"></i>College timings</a>
+      <a href="#import" data-page="import"><i data-icon="upload"></i>Import data</a>
+      <a href="#history" data-page="history"><i data-icon="file"></i>Version history</a>
+      <a href="#analytics" data-page="analytics"><i data-icon="shield"></i>Analytics & conflicts</a>
+      <a href="#performance" data-page="performance"><i data-icon="sliders"></i>Performance</a>
+    </nav>
+    <div class="sidebar-note"><span class="mini-spark">✦</span><strong>A little planning.<br>A better semester.</strong><p>Every teacher, room, and class. In the right place.</p><a href="#import">Explore sample data <span>↗</span></a></div>
+    <div class="sidebar-bottom"><div class="avatar">AC</div><div>Academic coordinator<small>University planning</small></div><span class="status-dot"></span></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" id="menu-toggle" aria-label="Toggle navigation"><i data-icon="menu"></i></button><span class="topbar-college">Datta Meghe College of Engineering<small>Airoli, Navi Mumbai</small></span></div><div class="topbar-right"><label class="department-switch">Department<select id="department-switch" aria-label="Active department"><option value="">All departments</option></select></label><span class="system-status" id="system-status"><span class="status-dot"></span>Connecting</span></div></header>
+    <main id="main" tabindex="-1"><div class="initial-loading"><span class="spinner"></span>Opening your workspace…</div></main>
+    <footer class="page-footer"><span>UniSched <span class="muted">/</span> Thoughtfully scheduled.</span><span>Datta Meghe College of Engineering</span></footer>
+  </div>
+  <dialog id="modal"><div id="modal-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+<a class="chat-launcher" id="chat-launcher" href="#assistant" aria-label="Open AI chat assistant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6A8.4 8.4 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 11h8M8 15h5"/></svg><span>AI Chat</span></a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Runtime versions for Python 3.11/3.12. Install with pip install -r requirements.lock
+absl-py==2.5.1
+annotated-types==0.8.0
+anyio==4.15.1
+chardet==7.6.0
+click==8.5.0
+colorama==0.4.6; sys_platform == "win32"
+et-xmlfile==2.0.0
+fastapi==0.115.12
+h11==0.16.0
+idna==3.20
+immutabledict==4.3.1
+numpy==2.2.6
+openpyxl==3.1.5
+ortools==9.14.6206
+pandas==2.2.3
+pillow==11.2.1
+protobuf==6.31.1
+pydantic==2.14.1
+pydantic-core==2.50.1
+python-dateutil==2.9.0.post0
+python-multipart==0.0.20
+pytz==2025.2
+reportlab==4.4.1
+six==1.17.0
+starlette==0.46.2
+typing-extensions==4.16.0
+typing-inspection==0.4.4
+tzdata==2025.2
+uvicorn==0.34.2
