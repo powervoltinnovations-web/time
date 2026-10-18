@@ -2,6 +2,73 @@
 from collections import defaultdict
 
 
+def teaching_halves(config):
+    """Split at the main recess, or the midpoint when there is no recess."""
+    from .calendar import minutes
+    periods=config.settings.periods()
+    gaps=[(minutes(periods[p][0])-minutes(periods[p-1][1]),p)
+          for p in range(1,len(periods))]
+    pause,split=max(gaps,default=(0,0))
+    if not pause:
+        split=len(periods)//2
+    return (range(0,split),range(split,len(periods)))
+
+
+def missing_half_day_pairs(config, entries, target_groups):
+    """Audit distinct, adjacent lecture sessions, not merely occupied periods."""
+    periods=config.settings.periods()
+    missing=[]
+    lectures=defaultdict(list)
+    for entry in entries:
+        if entry['kind']=='lecture':
+            lectures[entry['group_id'],entry['day']].append(entry)
+    for group in sorted(target_groups):
+        for day in range(len(config.settings.days)):
+            for half,slots in enumerate(teaching_halves(config)):
+                items=[e for e in lectures[group,day]
+                       if e['slot'] in slots and e['slot']+e['duration']-1 in slots]
+                paired=any(a['slot']+a['duration']==b['slot']
+                           and a['room_id']==b['room_id']
+                           and periods[b['slot']-1][1]==periods[b['slot']][0]
+                           for a in items for b in items if a is not b)
+                if not paired:
+                    missing.append({'group_id':group,'day':day,'half':half})
+    return missing
+
+
+def require_half_day_pairs(model, config, candidates, target_groups, enabled=None):
+    """Require a same-room pair in each half of every selected division's day."""
+    if not config.settings.classroom_pairs_each_half:
+        return
+    starts=defaultdict(list);ends=defaultdict(list)
+    halves=teaching_halves(config);periods=config.settings.periods()
+    for var,entry in candidates:
+        if entry['kind']!='lecture' or entry['group_id'] not in target_groups:
+            continue
+        for half,slots in enumerate(halves):
+            start=entry['slot'];end=start+entry['duration']
+            if start in slots and end-1 in slots:
+                key=(entry['group_id'],entry['day'],half,entry['room_id'])
+                starts[*key,start].append(var)
+                ends[*key,end].append(var)
+    pairs=defaultdict(list)
+    for key,right in starts.items():
+        group,day,half,room,slot=key
+        left=ends.get(key)
+        if not left or slot==0 or periods[slot-1][1]!=periods[slot][0]:
+            continue
+        pair=model.NewBoolVar(f'half_pair_{group}_{day}_{half}_{room}_{slot}')
+        model.Add(sum(left)>=1).OnlyEnforceIf(pair)
+        model.Add(sum(right)>=1).OnlyEnforceIf(pair)
+        pairs[group,day,half].append(pair)
+    for group in target_groups:
+        for day in range(len(config.settings.days)):
+            for half in range(2):
+                constraint=model.Add(sum(pairs[group,day,half])>=1)
+                if enabled is not None:
+                    constraint.OnlyEnforceIf(enabled)
+
+
 def classroom_metrics(config, entries):
     preferred=config.settings.classroom_run_length
     periods=config.settings.periods()
@@ -32,7 +99,7 @@ def optimize_classrooms(config, entries, locked_entries, time_limit):
     from copy import deepcopy
     from ortools.sat.python import cp_model
     from .resources import eligible_rooms
-    if config.settings.classroom_run_length<=1:
+    if config.settings.classroom_run_length<=1 and not config.settings.classroom_pairs_each_half:
         return entries,False
     model=cp_model.CpModel();rooms={r.id:i+1 for i,r in enumerate(config.rooms)}
     offerings={o.id:o for o in config.offerings};bookings=defaultdict(list);slots=defaultdict(dict)
@@ -58,6 +125,9 @@ def optimize_classrooms(config, entries, locked_entries, time_limit):
     periods=config.settings.periods();preferred=config.settings.classroom_run_length
     changes=[];shortfalls=[]
     locked_groups={e['group_id'] for e in locked_entries}
+    require_half_day_pairs(model,config,
+        [(v,{**entries[i],'room_id':room}) for i,v,room in choices],
+        {e['group_id'] for e in entries}-locked_groups)
     for (group,day),lecture_slots in slots.items():
         last_slot=last_room=last_run=None
         for p,code in sorted(lecture_slots.items()):

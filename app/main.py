@@ -62,6 +62,7 @@ class GenerateRequest(BaseModel):
     base_generation_id: int | None = Field(default=None, ge=1)
     continue_latest: bool = True
     classroom_run_length: int | None = Field(default=None, ge=1, le=3, strict=True)
+    classroom_pairs_each_half: bool | None = None
 
     @field_validator('name')
     @classmethod
@@ -172,6 +173,8 @@ def generate_timetable(payload: GenerateRequest):
         config = Configuration(**current['configuration'])
         if payload.classroom_run_length is not None:
             config.settings.classroom_run_length = payload.classroom_run_length
+        if payload.classroom_pairs_each_half is not None:
+            config.settings.classroom_pairs_each_half = payload.classroom_pairs_each_half
         groups = [g for g in config.groups if (not payload.department_id or g.department_id == payload.department_id)
                   and (not payload.semester or g.semester == payload.semester)]
         if payload.group_ids is not None:

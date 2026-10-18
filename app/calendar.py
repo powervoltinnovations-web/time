@@ -39,6 +39,7 @@ class Settings(BaseModel):
     blocked: list[Block] = Field(default_factory=list, max_length=40)
     spread_lectures: bool = True
     classroom_run_length: int = Field(default=1, ge=1, le=3, strict=True)
+    classroom_pairs_each_half: bool = False
     lecture_slots: int = Field(default=1, ge=1, le=2, strict=True)
     lab_slots: int = Field(default=2, ge=1, le=4, strict=True)
     project_slots: int = Field(default=4, ge=1, le=6, strict=True)
@@ -95,4 +96,5 @@ class Settings(BaseModel):
         return {'days': self.days, 'periods': self.periods(), 'breaks': [b.model_dump() for b in self.breaks],
                 'blocked': [b.model_dump() for b in self.blocked], 'start': self.start, 'end': self.end,
                 'period_minutes': self.period_minutes, 'lecture_slots': self.lecture_slots,
-                'lab_slots': self.lab_slots, 'project_slots': self.project_slots, 'spread_lectures':self.spread_lectures,'classroom_run_length':self.classroom_run_length}
+                'lab_slots': self.lab_slots, 'project_slots': self.project_slots, 'spread_lectures':self.spread_lectures,'classroom_run_length':self.classroom_run_length,
+                'classroom_pairs_each_half':self.classroom_pairs_each_half}

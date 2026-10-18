@@ -6,7 +6,8 @@ from collections import defaultdict
 from ortools.sat.python import cp_model
 from .domain import Configuration, minutes
 from .classrooms import (classroom_metrics, optimize_classrooms, require_classroom_runs,
-                         interchangeable_classrooms, allocate_classroom_blocks)
+                         interchangeable_classrooms, allocate_classroom_blocks,
+                         require_half_day_pairs, missing_half_day_pairs, teaching_halves)
 from .resources import student_units, affected_units, session_specs, teaching_slots, eligible_rooms
 
 
@@ -118,8 +119,23 @@ def generate(config: Configuration, time_limit=20, target_group_ids=None, locked
         return failed('infeasible',problems)
     settings = config.settings
     periods, days = settings.periods(), settings.days
+    if settings.classroom_pairs_each_half:
+        required_lectures=4*len(days)
+        for group in selected.groups:
+            if group.id not in targets:
+                continue
+            lectures=sum(o.lectures for o in selected.offerings if o.group_id==group.id)
+            if lectures<required_lectures or any(len(half)<2*settings.lecture_slots for half in teaching_halves(selected)):
+                return failed('infeasible',[issue('HALF_DAY_CLASSROOM_PAIRS',
+                    f'Semester {group.semester} {group.division} needs two consecutive lectures in each half on all {len(days)} working days: at least {required_lectures} weekly lectures. It has {lectures}. Each half must also fit two complete lectures.',
+                    'Review assigned lecture counts and college timings, or turn off the each-half requirement. No lectures have been added or removed.')])
     def success(entries,room_optimal,peak_value,balance_optimal,reused=False):
+        if settings.classroom_pairs_each_half and missing_half_day_pairs(selected,entries,targets):
+            return failed('infeasible',[issue('HALF_DAY_CLASSROOM_PAIRS',
+                'The timetable does not provide a consecutive same-classroom lecture pair in each half of every working day.',
+                'Review eligible rooms, teacher availability, and preserved divisions, or generate the connected divisions together.')])
         room_quality=classroom_metrics(selected,entries)
+        room_quality['pairs_each_half_enforced']=settings.classroom_pairs_each_half
         hours = sum(e['duration']*settings.period_minutes/60 for e in entries)
         return {'status':'feasible','entries':entries,'issues':[],'scope':scope,'elapsed_seconds':round(time.monotonic()-started,3),
                 'solutions':[
@@ -131,6 +147,7 @@ def generate(config: Configuration, time_limit=20, target_group_ids=None, locked
                     f'Preserved {len(locked)} sessions outside the selected divisions from the base timetable.' if locked else 'Created a fresh plan for the selected scope.',
                     'Spread each subject’s lectures across working days; subjects with up to one lecture per working day never repeat on the same day.' if settings.spread_lectures else 'Used the saved lecture-distribution policy.',
                     f'Classroom preference: {settings.classroom_run_length} consecutive lecture periods; {room_quality["classroom_changes"]} changes, including {room_quality["early_changes"]} before the preferred run length. Mandatory constraints remain enforced.' if settings.classroom_run_length>1 else 'Classroom continuity optimization was not requested.',
+                    *(['Verified at least two consecutive lectures in the same classroom in each half of every working day for newly generated divisions.'] if settings.classroom_pairs_each_half else []),
                     f'Limited the longest student day to {peak_value} teaching periods.'
                 ],'summary':{'sessions':len(entries),'teaching_hours':hours,'divisions':len(selected.groups),
                               'teachers':len({e['teacher_id'] for e in entries}),'reused_placements':reused,'max_daily_hours':peak_value*settings.period_minutes/60,
@@ -146,6 +163,8 @@ def generate(config: Configuration, time_limit=20, target_group_ids=None, locked
         try:
             audit=analyze({'config':selected.model_dump(),'result':{'status':'feasible','entries':seed}})
             valid={e['group_id'] for e in seed}==expected and not audit['hard_conflicts']
+            if settings.classroom_pairs_each_half and missing_half_day_pairs(selected,seed,targets):
+                valid=False
         except (KeyError,IndexError,TypeError,ValueError):
             valid=False
         if valid:
@@ -255,6 +274,11 @@ def generate(config: Configuration, time_limit=20, target_group_ids=None, locked
                 if load >= len(days) and busy:
                     model.Add(busy[0] == 1).OnlyEnforceIf(no_gaps)
                 model.Add(sum(busy) <= peak)
+    if settings.classroom_pairs_each_half:
+        half_pairs=assumption('half_day_classroom_pairs',issue('HALF_DAY_CLASSROOM_PAIRS',
+            'Every selected division needs two consecutive lectures in the same classroom in both halves of every working day.',
+            'Review teacher availability, eligible rooms, lecture counts, and preserved divisions. Generate connected divisions together if their room bookings must move.'))
+        require_half_day_pairs(model,selected,candidates,targets,half_pairs)
     model.Minimize(peak)
     diagnostic_model = model.Clone()
     model.ClearAssumptions()
