@@ -249,7 +249,7 @@ async function action(name,node){
  if(name==='tab'){state.tab=node.dataset.tab;state.search='';render();return;}
  if(name==='add'||name==='edit'){editModal(node.dataset.id);return;}
  if(name==='delete'){deleteModal(node.dataset.id);return;}
- if(name==='view-group'||name==='view-teacher'){state.view=name==='view-group'?'group':'teacher';state.target='';render();return;}
+ if(['view-group','view-teacher','view-classroom','view-lab'].includes(name)){state.view=name.slice(5);state.target='';state.batch='';render();return;}
  if(name==='sample'){
   const response=await fetch('/api/sample.csv');if(!response.ok)throw new Error('Could not load sample data.');
   await previewFile(new File([await response.blob()],'unisched_semesters_3_5_7.csv',{type:'text/csv'}));return;

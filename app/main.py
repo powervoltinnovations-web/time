@@ -341,7 +341,7 @@ def performance():
             'runs':rows,'measurement_note':'API latency covers the latest 500 completed requests in this process. Generation metrics cover solver runs among the latest 100 saved versions, including failed and timed-out searches; manual edits are excluded. Memory is peak resident process memory when available.'}
 
 @app.get('/api/generations/{identifier}/export/{format}')
-def export_generation(identifier: int, format: Literal['pdf','xlsx'], view: Literal['group','teacher']='group', target: str | None = Query(default=None, max_length=80), batch: str | None = Query(default=None,max_length=80)):
+def export_generation(identifier: int, format: Literal['pdf','xlsx'], view: Literal['group','teacher','classroom','lab']='group', target: str | None = Query(default=None, max_length=80), batch: str | None = Query(default=None,max_length=80)):
     record = generation_detail(identifier)
     if record['result']['status'] != 'feasible':
         raise HTTPException(409, 'Only a successfully generated timetable can be exported.')
