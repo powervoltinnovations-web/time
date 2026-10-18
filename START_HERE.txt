@@ -1,0 +1,38 @@
+UNISCHED - UPDATE OF YOUR SUPPLIED time.zip
+
+1. Extract the entire ZIP into a new folder.
+2. If you have existing saved work, stop the old server and COPY its complete
+   data folder into the new project folder before starting. Keep the old folder
+   as a backup. Do not copy the old .venv folder.
+3. Double-click start_windows.bat. Use 64-bit Python 3.11 or 3.12.
+4. Open http://127.0.0.1:8000 and press Ctrl+F5 to refresh cached website files.
+   Keep the command window open while using UniSched.
+
+LATEST FIXES
+- Repeated generation validates compatible saved placements instead of starting
+  an expensive search again. It still saves a separate new Draft.
+- A fresh search also allocates interchangeable rooms by whole lecture blocks.
+  The minimum-three-consecutive-lectures rule is retained.
+- Delete timetable is beside the saved-timetable selector and in Version history.
+  It also removes failed reports. Unlock/mark Draft first when necessary, then
+  confirm deletion. Academic data and other versions are kept.
+
+WHERE THE CHANGES ARE
+- AI Chat: purple floating button at the bottom-right, including the home page.
+  Also accessible through AI chat assistant in the left sidebar.
+- Mini projects: separate left-sidebar page. No project data has been added.
+  Add a project only when you want one, then generate a new timetable.
+- Classroom optimization: Generate timetable > Classroom continuity preference.
+  Default: keep the same room for at least 3 consecutive lectures before a
+  change within a lecture block. Regenerate to apply this to an existing plan.
+  Labs, recess, projects, and the end of the day may end a shorter block.
+- All batches: separate labelled cards; overlapping text has been fixed.
+
+DATA
+The supplied sample files and original dataset generator are unchanged.
+No subjects, teachers, rooms, labs, batches, or project entries were added or
+removed. Your original lab frequency and time-gap rules are retained.
+Existing saved timetable versions are not regenerated or overwritten.
+No need to import reference data again to use these features.
+
+Local chat works without a key. Optional OpenAI setup is in README.md.
