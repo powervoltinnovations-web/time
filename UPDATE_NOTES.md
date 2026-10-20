@@ -1,3 +1,5 @@
+> **Reviewed data update:** See [DATA_UPDATE_NOTES.md](DATA_UPDATE_NOTES.md) for the latest assignments and how to preserve your existing local changes. Older validation results below refer to the preceding dataset.
+
 # Room allocation and academic editing correction
 
 Based only on the uploaded timetable-bef34540b6b7aa39e23352f209cbfe69092cce1f.zip.

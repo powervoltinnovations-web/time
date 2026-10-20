@@ -5,3 +5,4 @@ data/*.db*
 artifacts/
 node_modules/
 *.log
+data/backups/

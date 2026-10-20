@@ -61,7 +61,7 @@ def test_full_zip_capacity_conflicts_are_reported_without_relaxation(client):
     assert "246 required room-hours" in room["problem"]
     assert "240 available room-hours" in room["problem"]
     assert "6 laboratories" in room["problem"]
-    assert any("Pallavi M. N." in i["problem"] and "32 periods" in i["problem"] for i in issues)
+    assert any("Pallavi M. N." in i["problem"] and "34 periods" in i["problem"] for i in issues)
     assert client.get("/api/config").json() == before
 
 
@@ -89,6 +89,13 @@ def test_each_semester_jointly_uses_shared_resources(semester, sessions):
     config.settings.classroom_run_length = 3
     result = generate(config, 30, [g.id for g in config.groups if g.semester == semester],
                       random_seed=7)
+    if semester in (3, 5):
+        # Reviewed reassignments exceed unchanged faculty caps in these scopes.
+        # Report those conflicts; do not silently increase the faculty limits.
+        assert result["status"] == "infeasible"
+        assert result["entries"] == []
+        assert any(i["code"] == "TEACHER_LOAD" for i in result["issues"])
+        return
     assert result["status"] == "feasible", result["issues"]
     assert len(result["entries"]) == sessions
     audit = analyze({"config": config.model_dump(), "result": result})

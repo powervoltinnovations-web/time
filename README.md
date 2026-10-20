@@ -1,3 +1,5 @@
+> **Reviewed data update:** See [DATA_UPDATE_NOTES.md](DATA_UPDATE_NOTES.md) for the latest assignments and how to preserve your existing local changes. Older validation results below refer to the preceding dataset.
+
 # UniSched
 
 University timetable planning for **Datta Meghe College of Engineering, Airoli, Navi Mumbai**. Website, FastAPI, SQLite, and OR-Tools CP-SAT. No frontend build is required.

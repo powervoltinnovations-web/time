@@ -1,0 +1,158 @@
+{
+  "new_teachers": [
+    {
+      "id": "teacher_hs",
+      "name": "Mr. Honaji Salve",
+      "short_code": "HS",
+      "max_hours": 20,
+      "max_daily_slots": 6,
+      "arrival": "09:00",
+      "departure": "17:45",
+      "department_id": "it",
+      "email": "",
+      "lab_eligible": true
+    },
+    {
+      "id": "teacher_rz",
+      "name": "Prof. Reshma Zore",
+      "short_code": "RZ",
+      "max_hours": 20,
+      "max_daily_slots": 6,
+      "arrival": "09:00",
+      "departure": "17:45",
+      "department_id": "it",
+      "email": "",
+      "lab_eligible": true
+    }
+  ],
+  "assignments": [
+    {
+      "semester": 3,
+      "division": "B",
+      "batch": "",
+      "subject_code": "2343114",
+      "kind": "lecture",
+      "teacher": "JSP"
+    },
+    {
+      "semester": 3,
+      "division": "C",
+      "batch": "C2",
+      "subject_code": "2343115",
+      "kind": "lab",
+      "teacher": "PMN"
+    },
+    {
+      "semester": 3,
+      "division": "C",
+      "batch": "C2",
+      "subject_code": "2343611",
+      "kind": "lab",
+      "teacher": "GMA"
+    },
+    {
+      "semester": 3,
+      "division": "C",
+      "batch": "C3",
+      "subject_code": "2993511",
+      "kind": "lab",
+      "teacher": "NYM"
+    },
+    {
+      "semester": 3,
+      "division": "C",
+      "batch": "C3",
+      "subject_code": "2343115",
+      "kind": "lab",
+      "teacher": "PMN"
+    },
+    {
+      "semester": 5,
+      "division": "A",
+      "batch": "A2",
+      "subject_code": "2345115",
+      "kind": "lab",
+      "teacher": "PMN"
+    },
+    {
+      "semester": 5,
+      "division": "B",
+      "batch": "B1",
+      "subject_code": "23451181",
+      "kind": "lab",
+      "teacher": "DPK"
+    },
+    {
+      "semester": 5,
+      "division": "B",
+      "batch": "B2",
+      "subject_code": "23451181",
+      "kind": "lab",
+      "teacher": "ADM"
+    },
+    {
+      "semester": 5,
+      "division": "B",
+      "batch": "B2",
+      "subject_code": "2345115",
+      "kind": "lab",
+      "teacher": "ARR"
+    },
+    {
+      "semester": 5,
+      "division": "B",
+      "batch": "B2",
+      "subject_code": "2345116",
+      "kind": "lab",
+      "teacher": "VGK"
+    },
+    {
+      "semester": 5,
+      "division": "C",
+      "batch": "C1",
+      "subject_code": "2345116",
+      "kind": "lab",
+      "teacher": "JRG"
+    },
+    {
+      "semester": 5,
+      "division": "C",
+      "batch": "C2",
+      "subject_code": "2345511",
+      "kind": "lab",
+      "teacher": "HS"
+    },
+    {
+      "semester": 5,
+      "division": "C",
+      "batch": "C2",
+      "subject_code": "MDL501",
+      "kind": "lab",
+      "teacher": "KNS"
+    },
+    {
+      "semester": 5,
+      "division": "C",
+      "batch": "C3",
+      "subject_code": "2345511",
+      "kind": "lab",
+      "teacher": "HS"
+    },
+    {
+      "semester": 7,
+      "division": "A",
+      "batch": "A1",
+      "subject_code": "ROSP",
+      "kind": "lab",
+      "teacher": "RZ"
+    },
+    {
+      "semester": 7,
+      "division": "A",
+      "batch": "A2",
+      "subject_code": "ROSP",
+      "kind": "lab",
+      "teacher": "RZ"
+    }
+  ]
+}

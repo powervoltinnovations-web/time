@@ -1,3 +1,8 @@
+LATEST REVIEWED DATA UPDATE
+Existing installation: stop the app, copy these files into its folder while keeping data and .venv, run update_reviewed_data.bat, then restart.
+Fresh installation: run start_windows.bat to load the corrected seed.
+See DATA_UPDATE_NOTES.md for the exact changes.
+
 UNISCHED — STRICT LAB ROOMS AND ACADEMIC EDITING FIX
 
 1. Extract the ZIP into a NEW folder. Keep your previous project as backup.

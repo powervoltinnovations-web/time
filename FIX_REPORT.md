@@ -1,3 +1,5 @@
+> **Reviewed data update:** See [DATA_UPDATE_NOTES.md](DATA_UPDATE_NOTES.md) for the latest assignments and how to preserve your existing local changes. Older validation results below refer to the preceding dataset.
+
 # Validation and remaining source-data conflicts
 
 ## Changes
