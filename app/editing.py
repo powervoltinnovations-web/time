@@ -17,9 +17,14 @@ def edit_result(record, changes):
         entry=entries[index]
         if change.day>=len(config.settings.days) or change.slot+entry['duration']>len(config.settings.periods()):
             raise ValueError('The session must fit within the saved timetable calendar. Multi-period sessions must fit in full.')
-        if change.room_id not in {r.id for r in config.rooms}:
+        if change.room_id is not None and change.room_id not in {r.id for r in config.rooms}:
             raise ValueError('Choose a room from this saved timetable.')
-        entry.update(day=change.day,slot=change.slot,room_id=change.room_id)
+        from .resources import booking_key
+        offering=next(o for o in config.offerings if o.id==entry['offering_id'])
+        key=booking_key(config,offering,entry['kind'])
+        original=(entry['day'],entry['slot'])
+        members=[entry] if key[0]!='joint' else [e for e in entries if e['kind']==entry['kind'] and (e['day'],e['slot'])==original and booking_key(config,next(o for o in config.offerings if o.id==e['offering_id']),e['kind'])==key]
+        for member in members: member.update(day=change.day,slot=change.slot,room_id=change.room_id)
     if entries==record['result']['entries']:
         raise ValueError('No placements changed. Move a session, swap placements, or select another eligible room.')
     audit=analyze({**record,'result':result})
@@ -29,7 +34,7 @@ def edit_result(record, changes):
     result['parent_generation_id']=record['id']
     result['elapsed_seconds']=0
     result['summary']['balance_optimal']=False
-    result['summary']['classroom_optimization']={**audit['classroom_optimization'],'optimal':False}
+    result['summary']['classroom_optimization']={**result['summary'].get('classroom_optimization',{}),**audit['classroom_optimization'],'optimal':False}
     peak=max((row['periods'] for row in audit['student_days']),default=0)
     result['summary']['max_daily_periods']=peak
     result['summary']['max_daily_hours']=peak*config.settings.period_minutes/60

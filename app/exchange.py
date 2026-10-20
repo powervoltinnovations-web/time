@@ -9,7 +9,7 @@ from .domain import Configuration, CSV_FIELDS, parse_csv
 EXTRA_FIELDS = ['department_code','department_name','student_strength','teacher_daily_limit',
                 'teacher_email','teacher_short_code','teacher_lab_eligible','project_sessions_per_week',
                 'batch_name','batch_strength','elective_set','course_type','weekly_hours',
-                'classroom_pool','lab_pool','calendar_json','department_pool','teacher_department_code','elective_set_code','project_hours_per_session','project_room']
+                'classroom_pool','lab_pool','calendar_json','department_pool','teacher_department_code','elective_set_code','project_hours_per_session','project_room','tutorial_sessions_per_week','tutorial_room','tutorial_hours_per_session']
 V2_FIELDS = CSV_FIELDS + EXTRA_FIELDS
 TABLES = ['departments','teachers','subjects','rooms','groups','batches','elective_sets','offerings']
 
@@ -26,7 +26,10 @@ def configuration_csv_v2(config):
     # The pools contain structured room metadata so automatic allocation survives import.
     pools = {kind:json.dumps([r.model_dump() for r in config.rooms if r.kind == kind],separators=(',',':')) for kind in ('classroom','lab')}
     for index,o in enumerate(config.offerings):
-        g,s,t = m['groups'][o.group_id],m['subjects'][o.subject_id],m['teachers'][o.teacher_id]
+        g,s,t = m['groups'][o.group_id],m['subjects'][o.subject_id],m['teachers'].get(o.teacher_id)
+        if t is None:
+            from types import SimpleNamespace
+            t=SimpleNamespace(name='',max_hours=0,arrival=config.settings.start,departure=config.settings.end,department_id=g.department_id,max_daily_slots=6,email='',short_code='',lab_eligible=True)
         dept = m['departments'][g.department_id]
         row = dict(zip(CSV_FIELDS,[g.semester,g.division,t.name,t.max_hours,t.arrival,t.departure,s.name,s.code,
             str(s.elective).lower(),m['rooms'][g.room_id].name if g.room_id else 'AUTO',
@@ -34,6 +37,7 @@ def configuration_csv_v2(config):
         row.update(department_code=dept.code,department_name=dept.name,student_strength=g.strength,
             teacher_daily_limit=t.max_daily_slots,teacher_email=t.email,teacher_short_code=t.short_code,
             teacher_lab_eligible=str(t.lab_eligible).lower(),project_sessions_per_week=o.projects,project_hours_per_session=o.project_hours,project_room=m['rooms'][o.project_room_id].name if o.project_room_id else '',
+            tutorial_sessions_per_week=o.tutorials,tutorial_room=m['rooms'][o.tutorial_room_id].name if o.tutorial_room_id else '',tutorial_hours_per_session=o.tutorial_hours,
             batch_name=m['batches'][o.batch_id].name if o.batch_id else '',
             batch_strength=m['batches'][o.batch_id].strength if o.batch_id else '',
             elective_set=m['elective_sets'][s.elective_set_id].name if s.elective_set_id else '',
@@ -51,8 +55,22 @@ def parse_extended_csv(content):
     rows = list(csv.DictReader(io.StringIO(content)))
     if not rows or len(rows)>240:
         raise ValueError('Provide 1–240 assignment rows.')
-    if list(rows[0]) not in (V2_FIELDS, V2_FIELDS[:-1], V2_FIELDS[:-2]):
+    if list(rows[0]) not in tuple(V2_FIELDS[:n] for n in range(32,len(V2_FIELDS)+1)):
         raise ValueError('CSV headers must match the original or updated sample template exactly.')
+    def is_tutorial(row):
+        return (int(row.get('tutorial_sessions_per_week') or 0)>0 or row['course_type'].strip()=='tutorial'
+                or row['subject_code'].strip().upper().endswith('-TUT') or 'tutorial' in row['subject_name'].lower())
+    def course_type(row):
+        return 'tutorial' if is_tutorial(row) else {'practical':'lab'}.get(row['course_type'].strip(),row['course_type'].strip() or 'theory')
+    if any(None in row or any(value is None for value in row.values()) for row in rows):
+        raise ValueError('Incorrect number of CSV columns.')
+    types={}
+    for row in rows:
+        types.setdefault((row['department_code'].strip().casefold(),row['subject_code'].strip().casefold()),set()).add(course_type(row))
+    # One subject can have theory and practical assignments; do not duplicate or rename it.
+    if any(len(values)>1 and not values<={'theory','lab','mixed'} for values in types.values()):
+        raise ValueError('Conflicting course types for the same subject code.')
+    canonical={key:('mixed' if values<={'theory','lab','mixed'} and len(values)>1 else next(iter(values))) for key,values in types.items()}
     data = {key:[] for key in TABLES}
     data['settings'] = {}
     pools = {}
@@ -116,9 +134,11 @@ def parse_extended_csv(content):
             dept = add('departments',code.casefold(),{'code':code,'name':row['department_name'] or code},dep_id)
             teacher_department = indexes['departments'].get((row['teacher_department_code'] or code).casefold())
             if teacher_department is None:
-                raise ValueError('Teacher department must be declared in the department pool.')
+                teacher_code = row['teacher_department_code'] or code
+                teacher_id = add('departments',teacher_code.casefold(),{'code':teacher_code,'name':teacher_code},teacher_code.lower().replace(' ','_'))
+                teacher_department = {'id':teacher_id}
             sem = int(row['semester'])
-            teacher = add('teachers',row['teacher_name'].casefold(),{
+            teacher = None if not row['teacher_name'] and int(row['project_sessions_per_week'] or 0)>0 else add('teachers',row['teacher_name'].casefold(),{
                 'name':row['teacher_name'],'max_hours':int(row['teacher_hours_per_week']),
                 'arrival':row['teacher_arrival'],'departure':row['teacher_departure'],'department_id':teacher_department['id'],
                 'max_daily_slots':int(row['teacher_daily_limit'] or 8),'email':row['teacher_email'],
@@ -129,7 +149,7 @@ def parse_extended_csv(content):
                     'name':row['elective_set'],'code':row['elective_set_code'] or row['elective_set'][:30]})
             subject = add('subjects',(dept,row['subject_code'].casefold()),{'name':row['subject_name'],
                 'code':row['subject_code'],'semester':sem,'elective':boolean(row['elective']),'department_id':dept,
-                'elective_set_id':elective_set,'course_type':row['course_type'] or 'theory','weekly_hours':int(row['weekly_hours'] or 3)})
+                'elective_set_id':elective_set,'course_type':canonical[(code.casefold(),row['subject_code'].casefold())],'weekly_hours':int(row['weekly_hours'] or 3)})
             def room_id(name,kind):
                 if name.upper() in ('','AUTO'):
                     return None
@@ -139,14 +159,18 @@ def parse_extended_csv(content):
                         raise ValueError('Room type does not match its use.')
                     return existing['id']
                 return add('rooms',name.casefold(),{'name':name,'kind':'classroom' if kind=='any' else kind,'capacity':80,'department_id':None,'eligible_years':[]})
-            classroom,lab = room_id(row['classroom'],'classroom'),room_id(row['lab_room'],'lab')
+            tutorial=is_tutorial(row)
+            tutorial_room=room_id(row.get('tutorial_room') or (row['classroom'] if tutorial else ''),'classroom')
+            classroom,lab = room_id('AUTO' if tutorial else row['classroom'],'classroom'),room_id(row['lab_room'],'lab')
             group = add('groups',(dept,sem,row['division'].casefold()),{'department_id':dept,'semester':sem,
                 'division':row['division'],'strength':int(row['student_strength'] or 60),'room_id':classroom})
             batch = None
             if row['batch_name']:
                 batch = add('batches',(group,row['batch_name']),{'group_id':group,'name':row['batch_name'],'strength':int(row['batch_strength'])})
             data['offerings'].append({'id':f'o{len(data["offerings"])+1}','teacher_id':teacher,'subject_id':subject,
-                'group_id':group,'lectures':int(row['lectures_per_week']),'labs':int(row['labs_per_week']),
+                'group_id':group,'lectures':0 if tutorial else int(row['lectures_per_week']),'labs':int(row['labs_per_week']),
+                'tutorials':int(row.get('tutorial_sessions_per_week') or row['lectures_per_week']) if tutorial else 0,
+                'tutorial_room_id':tutorial_room,'tutorial_hours':float(row['tutorial_hours_per_session']) if row.get('tutorial_hours_per_session') else None,
                 'projects':int(row['project_sessions_per_week'] or 0),
                 'project_room_id':room_id(row.get('project_room',''),'any'),
                 'project_hours':float(row['project_hours_per_session']) if row.get('project_hours_per_session') else None,'batch_id':batch,'lab_room_id':lab})

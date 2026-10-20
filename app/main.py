@@ -19,7 +19,7 @@ from .scheduler import generate, preflight
 from .exports import pdf, excel
 from .exchange import configuration_csv_v2, configuration_excel, parse_upload
 from .analytics import analyze
-from .demo import presentation_config
+from .demo import presentation_config, OFFICIAL_CSV
 from .calendar import Settings
 from .editing import edit_result
 from . import assistant
@@ -61,8 +61,11 @@ class GenerateRequest(BaseModel):
     group_ids: list[str] | None = Field(default=None, max_length=30)
     base_generation_id: int | None = Field(default=None, ge=1)
     continue_latest: bool = True
-    classroom_run_length: int | None = Field(default=None, ge=1, le=3, strict=True)
-    classroom_pairs_each_half: bool | None = None
+    classroom_run_length: int | None = Field(default=None, ge=2, le=3, strict=True)
+
+    start_time: Literal['09:00','10:00'] | None = None
+    # Accept old clients without allowing them to bypass room eligibility.
+    flexible_practicals: bool = False
 
     @field_validator('name')
     @classmethod
@@ -92,7 +95,7 @@ def ask_assistant(payload: AssistantRequest):
         if record is None: raise HTTPException(404,'Timetable not found.')
         records=[record]
     else:
-        records=[record for r in storage.generations() if (record:=storage.get_generation(r['id'])) is not None]
+        records=[storage.get_generation(r['id']) for r in storage.generations()]
     if not records:
         raise HTTPException(422,'Generate or select a saved timetable first.')
     try:
@@ -138,7 +141,7 @@ def export_configuration():
 
 @app.get('/api/sample.csv')
 def sample_csv():
-    return FileResponse(ROOT/'sample_data'/'unisched_semesters_3_5_7.csv', media_type='text/csv', filename='unisched_semesters_3_5_7.csv')
+    return FileResponse(OFFICIAL_CSV, media_type='text/csv', filename=OFFICIAL_CSV.name)
 
 @app.post('/api/import/preview')
 async def import_preview(file: UploadFile = File(...)):
@@ -171,10 +174,22 @@ def generate_timetable(payload: GenerateRequest):
     try:
         current = storage.get_config()
         config = Configuration(**current['configuration'])
-        if payload.classroom_run_length is not None:
-            config.settings.classroom_run_length = payload.classroom_run_length
-        if payload.classroom_pairs_each_half is not None:
-            config.settings.classroom_pairs_each_half = payload.classroom_pairs_each_half
+        settings = config.settings.model_dump()
+        settings['classroom_run_length'] = payload.classroom_run_length or 2
+        settings['practical_classroom_codes'] = []
+        if payload.start_time is not None and payload.start_time != settings['start']:
+            old_periods = config.settings.periods()
+            settings['start'] = payload.start_time
+            try:
+                new_periods = Settings(**{**settings, 'blocked': []}).periods()
+            except ValueError as exc:
+                raise HTTPException(422, str(exc)) from exc
+            settings['blocked'] = [{**b, 'slot': new_periods.index(old_periods[b['slot']])}
+                                   for b in settings['blocked'] if old_periods[b['slot']] in new_periods]
+        try:
+            config = Configuration(**{**config.model_dump(), 'settings': settings})
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
         groups = [g for g in config.groups if (not payload.department_id or g.department_id == payload.department_id)
                   and (not payload.semester or g.semester == payload.semester)]
         if payload.group_ids is not None:
@@ -198,7 +213,7 @@ def generate_timetable(payload: GenerateRequest):
         seed=base
         target_ids={g.id for g in groups}
         if payload.continue_latest and (not seed or not target_ids<={e['group_id'] for e in seed['result']['entries']}):
-            # A previous two-period plan can seed the new three-period rule.
+            # A prior room-allocation setting can seed the selected minimum; validate it again.
             wanted={k:v for k,v in config.settings.model_dump().items() if k!='classroom_run_length'}
             for candidate in storage.generations():
                 if candidate['status']=='feasible' and candidate['config_revision']==current['revision']:
@@ -206,10 +221,24 @@ def generate_timetable(payload: GenerateRequest):
                     if target_ids<={e['group_id'] for e in saved['result']['entries']} and {k:v for k,v in saved['config']['settings'].items() if k!='classroom_run_length'}==wanted:
                         seed=saved
                         break
+        from .hints import reference_entries
+        prepared=seed['result']['entries'] if seed else reference_entries(config)
         result = generate(config, payload.time_limit, [g.id for g in groups], base['result']['entries'] if base else [],
-                          initial_entries=seed['result']['entries'] if seed else None)
+                          initial_entries=prepared)
+        if result['status'] == 'feasible':
+            audit = analyze({'config': config.model_dump(), 'result': result})
+            if audit['hard_conflicts']:
+                raise HTTPException(500, 'The generated candidate failed final validation and was not saved: '
+                                    + '; '.join(audit['violations']))
+        result['scope']['verified_reference_hint']=bool(prepared and not seed)
         result['scope']['seed_generation_id']=seed['id'] if seed else None
         result['scope']['base_generation_id'] = base['id'] if base else None
+        result['scheduling_options'] = {'start': config.settings.start,
+            'practical_hours': config.settings.lab_slots*config.settings.period_minutes/60,
+            'source_practical_hours': current['configuration']['settings']['lab_slots']*current['configuration']['settings']['period_minutes']/60,
+            'classroom_minimum': config.settings.classroom_run_length,
+            'classroom_practical_codes':config.settings.practical_classroom_codes,
+            'project_policy':'Unsupervised Major Project reserves student time only; no teacher or room booking.'}
         identifier = storage.save_generation(payload.name.strip() or 'Timetable', current['revision'], config.model_dump(), result)
         return storage.get_generation(identifier)
     finally:
@@ -222,24 +251,20 @@ def generation_detail(identifier: int):
         raise HTTPException(404, 'Timetable not found.')
     return result
 
-class DeleteGenerationRequest(BaseModel):
-    revision: int = Field(ge=0, strict=True)
-
-
 @app.delete('/api/generations/{identifier}')
-def delete_timetable(identifier: int, payload: DeleteGenerationRequest):
+def delete_timetable(identifier: int, revision: int = Query(ge=0)):
     if not generation_lock.acquire(blocking=False):
-        raise HTTPException(409,'Wait for generation to finish before deleting a saved timetable.')
+        raise HTTPException(409,'A timetable is being generated. Wait for it to finish before deleting.')
     try:
-        generation_detail(identifier)
         try:
-            storage.delete_generation(identifier,payload.revision)
+            removed=storage.delete_generation(identifier,revision)
         except storage.RevisionConflict as exc:
             raise HTTPException(409,str(exc)) from exc
+        if not removed:
+            raise HTTPException(404,'Timetable not found.')
         return {'deleted':identifier}
     finally:
         generation_lock.release()
-
 
 class WorkflowUpdate(BaseModel):
     revision: int = Field(ge=0)
@@ -250,7 +275,7 @@ class PlacementChange(BaseModel):
     entry_index: int = Field(ge=0, strict=True)
     day: int = Field(ge=0, le=6, strict=True)
     slot: int = Field(ge=0, le=15, strict=True)
-    room_id: str = Field(min_length=1,max_length=80)
+    room_id: str | None = Field(default=None,min_length=1,max_length=80)
 
 
 class ManualEdit(BaseModel):
@@ -315,9 +340,9 @@ def export_excel_data():
 @app.get('/api/demo/{format}')
 def demo_data(format: Literal['json','csv','xlsx']):
     config = presentation_config()
-    body = config.model_dump_json(indent=2) if format=='json' else configuration_csv_v2(config) if format=='csv' else configuration_excel(config)
+    body = config.model_dump_json(indent=2) if format=='json' else OFFICIAL_CSV.read_bytes() if format=='csv' else configuration_excel(config)
     return Response(body,media_type={'json':'application/json','csv':'text/csv','xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}[format],
-                    headers={'Content-Disposition':f'attachment; filename="it_presentation.{format}"'})
+                    headers={'Content-Disposition':f'attachment; filename="it_official_data.{format}"'})
 
 @app.get('/api/performance')
 def performance():
@@ -326,7 +351,7 @@ def performance():
     solver_rows=[]
     for row in rows:
         record = storage.get_generation(row['id'])
-        if record is None or record['result'].get('source')=='manual':
+        if record['result'].get('source')=='manual':
             continue
         solver_rows.append(row)
         row['duration'] = record['result'].get('elapsed_seconds',0)
@@ -361,7 +386,7 @@ def performance():
             'runs':rows,'measurement_note':'API latency covers the latest 500 completed requests in this process. Generation metrics cover solver runs among the latest 100 saved versions, including failed and timed-out searches; manual edits are excluded. Memory is peak resident process memory when available.'}
 
 @app.get('/api/generations/{identifier}/export/{format}')
-def export_generation(identifier: int, format: Literal['pdf','xlsx'], view: Literal['group','teacher']='group', target: str | None = Query(default=None, max_length=80), batch: str | None = Query(default=None,max_length=80)):
+def export_generation(identifier: int, format: Literal['pdf','xlsx'], view: Literal['group','teacher','classroom','lab']='group', target: str | None = Query(default=None, max_length=80), batch: str | None = Query(default=None,max_length=80)):
     record = generation_detail(identifier)
     if record['result']['status'] != 'feasible':
         raise HTTPException(409, 'Only a successfully generated timetable can be exported.')

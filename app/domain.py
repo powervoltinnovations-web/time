@@ -62,7 +62,7 @@ class Subject(Record):
     elective: bool = False
     department_id: str = 'general'
     elective_set_id: str | None = None
-    course_type: str = Field(default='theory', pattern=r'^(theory|lab|project|mixed)$')
+    course_type: str = Field(default='theory', pattern=r'^(theory|lab|project|mixed|tutorial)$')
     weekly_hours: int = Field(default=3, ge=1, le=40, strict=True)
 
     @field_validator('semester')
@@ -97,19 +97,24 @@ class Group(Record):
 class Offering(Record):
     group_id: str
     subject_id: str
-    teacher_id: str
+    teacher_id: str | None = None
     lectures: int = Field(ge=0, le=40, strict=True)
     labs: int = Field(ge=0, le=20, strict=True)
     lab_room_id: str | None = None
     projects: int = Field(default=0, ge=0, le=20, strict=True)
     batch_id: str | None = None
+    tutorials: int = Field(default=0, ge=0, le=40, strict=True)
+    tutorial_room_id: str | None = None
+    tutorial_hours: float | None = Field(default=None, ge=0.5, le=4, allow_inf_nan=False)
     project_room_id: str | None = None
     project_hours: float | None = Field(default=None, ge=0.5, le=8, allow_inf_nan=False)
 
     @model_validator(mode='after')
     def nonempty(self):
-        if self.lectures + self.labs + self.projects == 0:
-            raise ValueError('An assignment needs at least one lecture, lab, or project per week.')
+        if self.lectures + self.labs + self.projects + self.tutorials == 0:
+            raise ValueError('An assignment needs at least one lecture, lab, tutorial, or project per week.')
+        if self.teacher_id is None and (self.lectures or self.labs or self.tutorials):
+            raise ValueError('Lectures, labs, and tutorials need an assigned teacher.')
         if self.batch_id and self.lectures:
             raise ValueError('Batch assignments are for labs/projects; assign lectures to the whole division.')
         return self
@@ -184,9 +189,13 @@ class Configuration(BaseModel):
             if group.room_id and (group.room_id not in rooms or rooms[group.room_id].kind != 'classroom'):
                 raise ValueError(f'Division {group.division} needs a valid classroom.')
         for item in self.offerings:
+            if item.tutorials and item.tutorial_hours is not None and not (item.tutorial_hours*60/self.settings.period_minutes).is_integer():
+                raise ValueError('Tutorial hours must fit whole teaching periods.')
+            if item.tutorial_room_id and (item.tutorial_room_id not in rooms or rooms[item.tutorial_room_id].kind!='classroom'):
+                raise ValueError('A tutorial requires a valid classroom.')
             if item.projects and item.project_hours is not None and not (item.project_hours*60/self.settings.period_minutes).is_integer():
                 raise ValueError('Mini-project hours must fit a whole number of teaching periods.')
-            if item.group_id not in groups or item.subject_id not in subjects or item.teacher_id not in teachers:
+            if item.group_id not in groups or item.subject_id not in subjects or (item.teacher_id is not None and item.teacher_id not in teachers):
                 raise ValueError(f'Assignment {item.id} references a missing division, subject, or teacher.')
             if groups[item.group_id].semester != subjects[item.subject_id].semester:
                 raise ValueError(f'Assignment {item.id}: subject and division semesters must match.')

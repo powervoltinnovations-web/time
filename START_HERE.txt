@@ -1,38 +1,33 @@
-UNISCHED - UPDATE OF YOUR SUPPLIED time.zip
+UNISCHED — STRICT LAB ROOMS AND ACADEMIC EDITING FIX
 
-1. Extract the entire ZIP into a new folder.
-2. If you have existing saved work, stop the old server and COPY its complete
-   data folder into the new project folder before starting. Keep the old folder
-   as a backup. Do not copy the old .venv folder.
-3. Double-click start_windows.bat. Use 64-bit Python 3.11 or 3.12.
-4. Open http://127.0.0.1:8000 and press Ctrl+F5 to refresh cached website files.
-   Keep the command window open while using UniSched.
+1. Extract the ZIP into a NEW folder. Keep your previous project as backup.
+2. Do NOT copy the old data folder if you want the supplied official CSV loaded.
+3. Double-click start_windows.bat (64-bit Python 3.11 or 3.12 required).
+4. Open http://127.0.0.1:8000 and press Ctrl+F5. Keep the command window open.
 
-LATEST FIXES
-- Repeated generation validates compatible saved placements instead of starting
-  an expensive search again. It still saves a separate new Draft.
-- A fresh search also allocates interchangeable rooms by whole lecture blocks.
-  The minimum-three-consecutive-lectures rule is retained.
-- Delete timetable is beside the saved-timetable selector and in Version history.
-  It also removes failed reports. Unlock/mark Draft first when necessary, then
-  confirm deletion. Academic data and other versions are kept.
+Generate by division: choose 9:00 or 10:00 start, and minimum 2 or 3
+consecutive lecture periods before changing rooms. Recess resets this rule.
+Tutorials: separate sidebar tab; supplied batch tutorials retain room 710.
+AI chat: purple floating button on the home page and sidebar.
 
-WHERE THE CHANGES ARE
-- AI Chat: purple floating button at the bottom-right, including the home page.
-  Also accessible through AI chat assistant in the left sidebar.
-- Mini projects: separate left-sidebar page. No project data has been added.
-  Add a project only when you want one, then generate a new timetable.
-- Classroom optimization: Generate timetable > Classroom continuity preference.
-  Default: keep the same room for at least 3 consecutive lectures before a
-  change within a lecture block. Regenerate to apply this to an existing plan.
-  Labs, recess, projects, and the end of the day may end a shorter block.
-- All batches: separate labelled cards; overlapping text has been fixed.
+Data: original uploaded CSV, unchanged. Practicals remain TWO HOURS and
+working days remain MONDAY–FRIDAY. Supplied lecture counts are unchanged.
+New lecture assignments default to 3 per week.
 
-DATA
-The supplied sample files and original dataset generator are unchanged.
-No subjects, teachers, rooms, labs, batches, or project entries were added or
-removed. Your original lab frequency and time-gap rules are retained.
-Existing saved timetable versions are not regenerated or overwritten.
-No need to import reference data again to use these features.
+Lectures use classrooms. Every two-hour laboratory session uses a lab.
+The previous classroom-practical / combined-batch option has been removed.
+The supplied full dataset needs 246 laboratory-hours but has only 240.
+Pallavi M. N. has 32 periods against a five-day capacity of 30.
+The full college plan cannot fit until those source constraints are corrected.
+See FIX_REPORT.md for evidence and separately validated semester scopes.
+Major Project still reserves student time without a teacher or room booking.
 
-Local chat works without a key. Optional OpenAI setup is in README.md.
+Academic setup: Edit subject saves changes. Use Edit linked assignments to
+change existing session counts. Subject default hours only prefill new rows.
+Deleting an assigned subject requires explicit confirmation to remove its
+linked teaching assignments. Saved timetable snapshots remain available.
+
+Existing databases are not overwritten automatically. To replace retained
+old data, back it up then use Import data > Preview supplied college data >
+Replace academic data. Historical saved timetables remain unchanged.
+See README.md for full details and manual setup commands.

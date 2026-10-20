@@ -27,7 +27,7 @@ async function loadAssistantSessions(){
  const record=await api('/api/generations/'+id);
  if(state.page!=='assistant'||a.generation!==id)return;
  a.record=record;const m=maps(record.config),meta=record.meta;
- select.innerHTML=optionsHTML([['','Whole timetable summary'],...record.result.entries.map((e,i)=>[i,`${meta.days[e.day]} ${meta.periods[e.slot][0]} · ${groupName(m.groups[e.group_id],record.config)} · ${m.subjects[e.subject_id].code}${e.batch_id?' · '+m.batches[e.batch_id].name:''} · ${m.rooms[e.room_id].name}`])],a.entry);
+ select.innerHTML=optionsHTML([['','Whole timetable summary'],...record.result.entries.map((e,i)=>[i,`${meta.days[e.day]} ${meta.periods[e.slot][0]} · ${groupName(m.groups[e.group_id],record.config)} · ${m.subjects[e.subject_id].code}${e.batch_id?' · '+m.batches[e.batch_id].name:''} · ${m.rooms[e.room_id]?.name||'Independent project'}`])],a.entry);
  select.disabled=record.result.status!=='feasible';
 }
 const actionBeforeAssistant=action;
