@@ -37,9 +37,12 @@ class Settings(BaseModel):
     days: list[str] = Field(default_factory=lambda: WEEKDAYS[:5], min_length=1, max_length=7)
     breaks: list[Break] = Field(default_factory=lambda: [Break()], max_length=4)
     blocked: list[Block] = Field(default_factory=list, max_length=40)
+    # Legacy backup field, retained for import compatibility only. Labs always use labs.
+    practical_classroom_codes: list[str] = Field(default_factory=list, max_length=100)
+    prefer_parallel_batches: bool = False
+    combined_elective_students: dict[str, int] = Field(default_factory=dict)
     spread_lectures: bool = True
     classroom_run_length: int = Field(default=1, ge=1, le=3, strict=True)
-    classroom_pairs_each_half: bool = False
     lecture_slots: int = Field(default=1, ge=1, le=2, strict=True)
     lab_slots: int = Field(default=2, ge=1, le=4, strict=True)
     project_slots: int = Field(default=4, ge=1, le=6, strict=True)
@@ -96,5 +99,4 @@ class Settings(BaseModel):
         return {'days': self.days, 'periods': self.periods(), 'breaks': [b.model_dump() for b in self.breaks],
                 'blocked': [b.model_dump() for b in self.blocked], 'start': self.start, 'end': self.end,
                 'period_minutes': self.period_minutes, 'lecture_slots': self.lecture_slots,
-                'lab_slots': self.lab_slots, 'project_slots': self.project_slots, 'spread_lectures':self.spread_lectures,'classroom_run_length':self.classroom_run_length,
-                'classroom_pairs_each_half':self.classroom_pairs_each_half}
+                'lab_slots': self.lab_slots, 'project_slots': self.project_slots, 'spread_lectures':self.spread_lectures,'classroom_run_length':self.classroom_run_length}

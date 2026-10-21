@@ -97,6 +97,22 @@ def generations():
     return output
 
 
+def delete_generation(identifier, expected_revision):
+    """Delete one unlocked saved version and its controls atomically."""
+    with connect() as db:
+        db.execute('BEGIN IMMEDIATE')
+        if not db.execute('SELECT id FROM generations WHERE id=?',(identifier,)).fetchone():
+            return False
+        workflow=_workflow(db,identifier)
+        if workflow['revision'] != expected_revision:
+            raise RevisionConflict('Timetable controls changed in another window. Reload before deleting.')
+        if workflow['locked']:
+            raise RevisionConflict('Unlock this timetable before deleting it.')
+        db.execute('DELETE FROM generation_workflow WHERE generation_id=?',(identifier,))
+        db.execute('DELETE FROM generations WHERE id=?',(identifier,))
+        return True
+
+
 def _workflow(db, identifier):
     row = db.execute('SELECT state,locked,revision FROM generation_workflow WHERE generation_id=?',(identifier,)).fetchone()
     return {'state':row['state'],'locked':bool(row['locked']),'revision':row['revision']} if row else {'state':'draft','locked':False,'revision':0}
@@ -140,20 +156,3 @@ def save_manual_version(source, expected_revision, name, result):
         workflow['revision']+=1
         _write_workflow(db,source['id'],workflow)
         return cursor.lastrowid
-
-
-def delete_generation(identifier, expected_revision):
-    """Delete one unlocked draft/report atomically, retaining academic data and children."""
-    with connect() as db:
-        db.execute('BEGIN IMMEDIATE')
-        if not db.execute('SELECT id FROM generations WHERE id=?',(identifier,)).fetchone():
-            raise RevisionConflict('This timetable no longer exists.')
-        workflow=_workflow(db,identifier)
-        if workflow['revision']!=expected_revision:
-            raise RevisionConflict('Timetable controls changed in another window. Reload before deleting.')
-        if workflow['locked']:
-            raise RevisionConflict('Unlock this timetable before deleting it.')
-        if workflow['state']=='approved':
-            raise RevisionConflict('Mark this timetable Draft before deleting it.')
-        db.execute('DELETE FROM generation_workflow WHERE generation_id=?',(identifier,))
-        db.execute('DELETE FROM generations WHERE id=?',(identifier,))

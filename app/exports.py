@@ -10,6 +10,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
 from .domain import COLLEGE, Configuration
 from .calendar import clock, minutes
+from .resources import elective_entry, booking_key
 
 
 def calendar_rows(settings):
@@ -29,10 +30,13 @@ def views(generation, view='group', target=None, batch=None):
             raise ValueError('Choose a batch belonging to the selected division.')
         entries=[e for e in entries if not e.get('batch_id') or e['batch_id']==batch]
     scheduled={e['group_id'] for e in entries}
-    key='groups' if view=='group' else 'teachers'
-    records=[item for item in data[key] if (not target or item['id']==target) and (view!='group' or item['id'] in scheduled)]
+    if view not in ('group','teacher','classroom','lab'):
+        raise ValueError('Choose a division, professor, classroom, or lab view.')
+    room_view=view in ('classroom','lab')
+    key='rooms' if room_view else 'groups' if view=='group' else 'teachers'
+    records=[item for item in data[key] if (not target or item['id']==target) and (view!='group' or item['id'] in scheduled) and (not room_view or item['kind']==view)]
     if not records:
-        raise ValueError('The selected division or professor is not in this saved timetable.')
+        raise ValueError('The selected division, professor, classroom, or lab is not in this saved timetable.')
     maps={name:{x['id']:x for x in data[name]} for name in ('teachers','subjects','groups','rooms','departments','batches')}
     output=[]
     for record in records:
@@ -40,7 +44,13 @@ def views(generation, view='group', target=None, batch=None):
                if view=='group' else record['name'])
         if batch:
             title+=' · Batch '+selected_batch.name
-        selected=[e for e in entries if e[view+'_id']==record['id']]
+        selected=[e for e in entries if e['room_id' if room_view else view+'_id']==record['id']]
+        if view!='group':
+            seen=set();unique=[];offerings={o.id:o for o in config.offerings}
+            for e in selected:
+                identity=(booking_key(config,offerings[e['offering_id']],e['kind']),e['day'],e['slot'],e['duration'],e['room_id'])
+                if identity not in seen: unique.append(e);seen.add(identity)
+            selected=unique
         grid=[['Time',*settings.days]]
         for row in calendar_rows(settings):
             if 'break' in row:
@@ -57,10 +67,12 @@ def views(generation, view='group', target=None, batch=None):
                 texts=[]
                 for e in matches:
                     subject,group=maps['subjects'][e['subject_id']],maps['groups'][e['group_id']]
-                    kind=e['kind'].upper()+(' · ELECTIVE' if subject['elective'] else '')
-                    who=maps['teachers'][e['teacher_id']]['name'] if view=='group' else f"{maps['departments'][group['department_id']]['code']} · Sem {group['semester']} · Div {group['division']}"
+                    kind='COMBINED A+B ELECTIVE' if elective_entry(config,e) else e['kind'].upper()+(' · ELECTIVE' if subject['elective'] else '')
+                    who=maps['teachers'].get(e['teacher_id'],{}).get('name','') if view=='group' else f"{maps['departments'][group['department_id']]['code']} · Sem {group['semester']} · Div {group['division']}"
+                    if room_view:
+                        who+='\n'+maps['teachers'].get(e['teacher_id'],{}).get('name','')
                     batch_label=' · '+maps['batches'][e['batch_id']]['name'] if e.get('batch_id') else ''
-                    texts.append(f"{subject['code']} · {kind}\n{subject['name']}\n{who}{batch_label}\n{maps['rooms'][e['room_id']]['name']}")
+                    texts.append(f"{subject['code']} · {kind}\n{subject['name']}\n{who}{batch_label}\n{maps['rooms'].get(e['room_id'],{}).get('name','')}")
                 cells.append('\n—\n'.join(texts))
             grid.append(cells)
         output.append((title,grid,sum(e['duration']*settings.period_minutes/60 for e in selected)))
@@ -76,7 +88,7 @@ def excel(generation,view='group',target=None,batch=None):
     workbook=Workbook()
     workbook.remove(workbook.active)
     for index,(title,grid,hours) in enumerate(views(generation,view,target,batch),1):
-        sheet=workbook.create_sheet(f'{index} '+('Division' if view=='group' else 'Professor'))
+        sheet=workbook.create_sheet(f'{index} '+{'group':'Division','teacher':'Professor','classroom':'Classroom','lab':'Lab'}[view])
         columns=len(grid[0])
         last=get_column_letter(columns)
         for row,text in [(1,COLLEGE),(2,f'UniSched | {title} | {workflow_label(generation)}'),(3,f"{generation['name']} | {hours:g} scheduled teaching hours / week")]:

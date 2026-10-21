@@ -1,72 +1,6 @@
 """Measure classroom continuity without weakening mandatory scheduling rules."""
 from collections import defaultdict
-
-
-def teaching_halves(config):
-    """Split at the main recess, or the midpoint when there is no recess."""
-    from .calendar import minutes
-    periods=config.settings.periods()
-    gaps=[(minutes(periods[p][0])-minutes(periods[p-1][1]),p)
-          for p in range(1,len(periods))]
-    pause,split=max(gaps,default=(0,0))
-    if not pause:
-        split=len(periods)//2
-    return (range(0,split),range(split,len(periods)))
-
-
-def missing_half_day_pairs(config, entries, target_groups):
-    """Audit distinct, adjacent lecture sessions, not merely occupied periods."""
-    periods=config.settings.periods()
-    missing=[]
-    lectures=defaultdict(list)
-    for entry in entries:
-        if entry['kind']=='lecture':
-            lectures[entry['group_id'],entry['day']].append(entry)
-    for group in sorted(target_groups):
-        for day in range(len(config.settings.days)):
-            for half,slots in enumerate(teaching_halves(config)):
-                items=[e for e in lectures[group,day]
-                       if e['slot'] in slots and e['slot']+e['duration']-1 in slots]
-                paired=any(a['slot']+a['duration']==b['slot']
-                           and a['room_id']==b['room_id']
-                           and periods[b['slot']-1][1]==periods[b['slot']][0]
-                           for a in items for b in items if a is not b)
-                if not paired:
-                    missing.append({'group_id':group,'day':day,'half':half})
-    return missing
-
-
-def require_half_day_pairs(model, config, candidates, target_groups, enabled=None):
-    """Require a same-room pair in each half of every selected division's day."""
-    if not config.settings.classroom_pairs_each_half:
-        return
-    starts=defaultdict(list);ends=defaultdict(list)
-    halves=teaching_halves(config);periods=config.settings.periods()
-    for var,entry in candidates:
-        if entry['kind']!='lecture' or entry['group_id'] not in target_groups:
-            continue
-        for half,slots in enumerate(halves):
-            start=entry['slot'];end=start+entry['duration']
-            if start in slots and end-1 in slots:
-                key=(entry['group_id'],entry['day'],half,entry['room_id'])
-                starts[*key,start].append(var)
-                ends[*key,end].append(var)
-    pairs=defaultdict(list)
-    for key,right in starts.items():
-        group,day,half,room,slot=key
-        left=ends.get(key)
-        if not left or slot==0 or periods[slot-1][1]!=periods[slot][0]:
-            continue
-        pair=model.NewBoolVar(f'half_pair_{group}_{day}_{half}_{room}_{slot}')
-        model.Add(sum(left)>=1).OnlyEnforceIf(pair)
-        model.Add(sum(right)>=1).OnlyEnforceIf(pair)
-        pairs[group,day,half].append(pair)
-    for group in target_groups:
-        for day in range(len(config.settings.days)):
-            for half in range(2):
-                constraint=model.Add(sum(pairs[group,day,half])>=1)
-                if enabled is not None:
-                    constraint.OnlyEnforceIf(enabled)
+from .resources import elective_entry
 
 
 def classroom_metrics(config, entries):
@@ -74,7 +8,7 @@ def classroom_metrics(config, entries):
     periods=config.settings.periods()
     lectures=defaultdict(dict)
     for e in entries:
-        if e['kind']=='lecture':
+        if e['kind']=='lecture' and not elective_entry(config,e):
             for p in range(e['slot'],e['slot']+e['duration']):
                 lectures[e['group_id'],e['day']][p]=e['room_id']
     changes=[]
@@ -98,16 +32,20 @@ def optimize_classrooms(config, entries, locked_entries, time_limit):
     """Reassign lecture rooms while holding every day/time/teacher/batch fixed."""
     from copy import deepcopy
     from ortools.sat.python import cp_model
-    from .resources import eligible_rooms
-    if config.settings.classroom_run_length<=1 and not config.settings.classroom_pairs_each_half:
+    from .resources import eligible_rooms, booking_key
+    if config.settings.classroom_run_length<=1:
         return entries,False
     model=cp_model.CpModel();rooms={r.id:i+1 for i,r in enumerate(config.rooms)}
     offerings={o.id:o for o in config.offerings};bookings=defaultdict(list);slots=defaultdict(dict)
     fixed={(e['offering_id'],e['kind'],e['day'],e['slot']):e['room_id'] for e in locked_entries}
     choices=[]
+    joint_bookings=set()
     for i,e in enumerate(entries):
-        if e['kind']!='lecture':
-            for p in range(e['slot'],e['slot']+e['duration']): bookings[e['room_id'],e['day'],p].append(1)
+        if e['kind']!='lecture' or elective_entry(config,e):
+            for p in range(e['slot'],e['slot']+e['duration']):
+                key=(e['room_id'],e['day'],p,booking_key(config,offerings[e['offering_id']],e['kind']))
+                if e['room_id'] and key not in joint_bookings:
+                    bookings[e['room_id'],e['day'],p].append(1);joint_bookings.add(key)
             continue
         eligible=eligible_rooms(config,offerings[e['offering_id']],'lecture')
         fixed_room=fixed.get((e['offering_id'],e['kind'],e['day'],e['slot']))
@@ -125,9 +63,6 @@ def optimize_classrooms(config, entries, locked_entries, time_limit):
     periods=config.settings.periods();preferred=config.settings.classroom_run_length
     changes=[];shortfalls=[]
     locked_groups={e['group_id'] for e in locked_entries}
-    require_half_day_pairs(model,config,
-        [(v,{**entries[i],'room_id':room}) for i,v,room in choices],
-        {e['group_id'] for e in entries}-locked_groups)
     for (group,day),lecture_slots in slots.items():
         last_slot=last_room=last_run=None
         for p,code in sorted(lecture_slots.items()):
@@ -166,7 +101,7 @@ def optimize_classrooms(config, entries, locked_entries, time_limit):
 def require_classroom_runs(model, config, candidates, target_groups, enabled):
     """Constrain room changes while choosing times, not only after times are fixed.
 
-    A lecture segment can finish before the minimum run (e.g. before a lab).
+    A lecture segment can finish before the requested minimum (e.g. before a lab).
     Within a continuing segment, switching rooms requires a complete run.
     Preserved divisions are historical bookings and are never rewritten here.
     """
@@ -176,7 +111,7 @@ def require_classroom_runs(model, config, candidates, target_groups, enabled):
     room_codes={r.id:i+1 for i,r in enumerate(config.rooms)}
     slots=defaultdict(list)
     for var,entry in candidates:
-        if entry['kind']=='lecture' and entry['group_id'] in target_groups:
+        if entry['kind']=='lecture' and not elective_entry(config,entry) and entry['group_id'] in target_groups:
             for p in range(entry['slot'],entry['slot']+entry['duration']):
                 slots[entry['group_id'],entry['day'],p].append((var,room_codes[entry['room_id']]))
     periods=config.settings.periods()
@@ -207,7 +142,7 @@ def require_classroom_runs(model, config, candidates, target_groups, enabled):
 
 def interchangeable_classrooms(config, locked_entries):
     """Pool only lecture rooms with exactly identical eligibility and no other use."""
-    from .resources import eligible_rooms, session_specs
+    from .resources import eligible_rooms, booking_key, session_specs
     pool=None
     for offering in config.offerings:
         if offering.lectures:
@@ -238,7 +173,7 @@ def allocate_classroom_blocks(config, entries, pool):
     updated=deepcopy(entries);by_group=defaultdict(list);blocks=defaultdict(list)
     periods=config.settings.periods()
     for e in updated:
-        if e['kind']=='lecture':
+        if e['kind']=='lecture' and not elective_entry(config,e):
             by_group[e['group_id'],e['day']].append(e)
     for (group,day),lectures in by_group.items():
         current=[];end=None
@@ -256,3 +191,129 @@ def allocate_classroom_blocks(config, entries, pool):
             for e in block: e['room_id']=room
             free_at[room]=block[-1]['slot']+block[-1]['duration']
     return updated
+
+
+def interchangeable_labs(config, locked_entries):
+    """Collapse identical auto-assigned laboratories during time placement."""
+    from .resources import eligible_rooms,session_specs
+    pool=None
+    for o in config.offerings:
+        for kind,count,_ in session_specs(config,o):
+            if not count: continue
+            rooms=eligible_rooms(config,o,kind)
+            labs=[r for r in rooms if r.kind=='lab']
+            if not labs: continue
+            if kind!='lab' or len(labs)<2: return None
+            if pool is not None and {r.id for r in labs}!={r.id for r in pool}: return None
+            pool=labs
+    if not pool or any(e['room_id'] in {r.id for r in pool} for e in locked_entries): return None
+    return pool
+
+
+def allocate_lab_intervals(entries,pool):
+    """Interval coloring of identical lab rooms; pooled capacity guarantees a fit."""
+    ids={r.id for r in pool};result=[dict(e) for e in entries]
+    for day in {e['day'] for e in result}:
+        ends={r.id:0 for r in pool}
+        sessions=sorted((e for e in result if e['day']==day and e['room_id'] in ids),key=lambda e:(e['slot'],e['offering_id']))
+        for e in sessions:
+            free=next((r.id for r in pool if ends[r.id]<=e['slot']),None)
+            if free is None: raise ValueError('Lab interval coloring exceeded validated pooled capacity.')
+            e['room_id']=free;ends[free]=e['slot']+e['duration']
+    return result
+
+
+def instructional_room_pool(config,locked_entries):
+    """Reserve fixed tutorial rooms; pool identical flexible teaching rooms.
+
+Pooling covers lectures and authorized classroom practicals. Fixed reservations
+and differing eligibility disable pooling rather than weaken resource checks.
+"""
+    from .resources import eligible_rooms,session_specs
+    base=None;reserved=set()
+    for o in config.offerings:
+        if o.lectures:
+            ids={r.id for r in eligible_rooms(config,o,'lecture')}
+            if len(ids)<2 or base is not None and ids!=base:return None
+            base=ids
+    if not base:return None
+    for o in config.offerings:
+        for kind,count,_ in session_specs(config,o):
+            if not count or kind=='lecture':continue
+            ids={r.id for r in eligible_rooms(config,o,kind)}
+            if ids!=base:reserved|=ids&base
+    ids=base-reserved
+    if len(ids)<2 or any(e['room_id'] in ids for e in locked_entries):return None
+    return [r for r in config.rooms if r.id in ids]
+
+
+def allocate_instruction_intervals(config,entries,pool):
+    """Color whole lecture blocks and joint practical intervals in pooled rooms."""
+    from .resources import booking_key
+    result=[dict(e) for e in entries];ids={r.id for r in pool}
+    offerings={o.id:o for o in config.offerings};periods=config.settings.periods()
+    for day in {e['day'] for e in result}:
+        intervals=[];lectures=defaultdict(list);other=defaultdict(list)
+        for e in result:
+            if e['day']!=day or e['room_id'] not in ids:continue
+            if e['kind']=='lecture' and not elective_entry(config,e):lectures[e['group_id']].append(e)
+            else:other[booking_key(config,offerings[e['offering_id']],e['kind']),e['slot'],e['duration']].append(e)
+        for sessions in lectures.values():
+            block=[];end=None
+            for e in sorted(sessions,key=lambda e:e['slot']):
+                if block and (end!=e['slot'] or periods[end-1][1]!=periods[e['slot']][0]):
+                    intervals.append((block[0]['slot'],end,block));block=[]
+                block.append(e);end=e['slot']+e['duration']
+            if block:intervals.append((block[0]['slot'],end,block))
+        for (_,slot,duration),sessions in other.items():intervals.append((slot,slot+duration,sessions))
+        ends={r.id:0 for r in pool}
+        for start,end,sessions in sorted(intervals,key=lambda x:(x[0],x[1])):
+            room=next((r.id for r in pool if ends[r.id]<=start),None)
+            if room is None:raise ValueError('Instructional room coloring exceeded pooled capacity.')
+            for e in sessions:e['room_id']=room
+            ends[room]=end
+    return result
+
+
+def preserve_final_year_rooms(config,entries,previous,time_limit=3):
+    """Keep existing final-year room assignments where new bookings allow it."""
+    from ortools.sat.python import cp_model
+    from .resources import eligible_rooms,booking_key
+    if not previous:return entries
+    old={(e['offering_id'],e['kind'],e['day'],e['slot']):e['room_id'] for e in previous}
+    offerings={o.id:o for o in config.offerings};groups={g.id:g for g in config.groups}
+    blocks=[];lectures=defaultdict(list);other=defaultdict(list)
+    periods=config.settings.periods()
+    for i,e in enumerate(entries):
+        if not e['room_id']:continue
+        if e['kind']=='lecture' and not elective_entry(config,e):lectures[e['group_id'],e['day']].append(i)
+        else:other[booking_key(config,offerings[e['offering_id']],e['kind']),e['day'],e['slot']].append(i)
+    blocks.extend(other.values())
+    for indices in lectures.values():
+        block=[];end=None
+        for i in sorted(indices,key=lambda i:entries[i]['slot']):
+            e=entries[i]
+            if block and (end!=e['slot'] or periods[end-1][1]!=periods[e['slot']][0]):blocks.append(block);block=[]
+            block.append(i);end=e['slot']+e['duration']
+        if block:blocks.append(block)
+    model=cp_model.CpModel();choices=[];occupied=defaultdict(list);penalties=[]
+    for indices in blocks:
+        eligible=set.intersection(*[{r.id for r in eligible_rooms(config,offerings[entries[i]['offering_id']],entries[i]['kind'])} for i in indices])
+        variables=[]
+        for room in sorted(eligible):
+            v=model.NewBoolVar('room');variables.append(v);choices.append((indices,room,v))
+            model.AddHint(v,int(all(entries[i]['room_id']==room for i in indices)))
+            slots={(entries[i]['day'],p) for i in indices for p in range(entries[i]['slot'],entries[i]['slot']+entries[i]['duration'])}
+            for day,p in slots:occupied[room,day,p].append(v)
+            cost=sum(groups[entries[i]['group_id']].semester==7 and not elective_entry(config,entries[i]) and old.get((entries[i]['offering_id'],entries[i]['kind'],entries[i]['day'],entries[i]['slot']),room)!=room for i in indices)
+            if cost:penalties.append(cost*v)
+        model.Add(sum(variables)==1)
+    for values in occupied.values():model.Add(sum(values)<=1)
+    model.Minimize(sum(penalties))
+    solver=cp_model.CpSolver();solver.parameters.max_time_in_seconds=time_limit;solver.parameters.num_search_workers=4
+    if solver.Solve(model) not in (cp_model.FEASIBLE,cp_model.OPTIMAL):return entries
+    result=[dict(e) for e in entries]
+    for indices,room,v in choices:
+        if solver.BooleanValue(v):
+            for i in indices:result[i]['room_id']=room
+    return result

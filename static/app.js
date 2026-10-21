@@ -218,8 +218,14 @@ async function saveConfig(next,revision=state.revision){
 function deleteModal(identifier){
  const category=state.tab;const item=state.config[category].find(i=>i.id===identifier);if(!item)return;
  const title=item.name||item.code|| (category==='groups'?groupLabel(item):'this teaching assignment');
- openModal('Delete '+singular[category],esc(title),`<p class="inline-help">Linked records must be reassigned or removed first. Saved timetables keep their original data.</p><form id="modal-form"><div class="form-error" id="form-error" role="alert"></div><div class="form-actions">${btn('Cancel','close-modal')}<button class="button danger" type="submit">Delete ${singular[category]}</button></div></form>`,async()=>{
-  const next=structuredClone(state.config);next[category]=next[category].filter(i=>i.id!==identifier);await saveConfig(next);closeModal();render();toast('Record deleted.');
+ const linked=category==='subjects'?state.config.offerings.filter(o=>o.subject_id===identifier):[];
+ const details=linked.length?`<p>This subject is used by ${linked.length} teaching assignment(s). Deleting it also requires removing those assignments from future generation.</p><label class="checkbox-field"><input type="checkbox" name="remove_assignments" required> Also remove ${linked.length} linked teaching assignment(s)</label><p><button type="button" class="button small" data-action="subject-assignments" data-id="${esc(identifier)}">Edit linked assignments instead</button></p>`:'<p class="inline-help">Other linked records must be reassigned or removed first.</p>';
+ openModal('Delete '+singular[category],esc(title),`<form id="modal-form">${details}<p class="inline-help">Saved timetable snapshots keep their original data. This removes current academic records and cannot be undone here. <a href="/api/config.json">Download a backup</a> first if needed.</p><div class="form-error" id="form-error" role="alert"></div><div class="form-actions">${btn('Cancel','close-modal')}<button class="button danger" type="submit">Delete ${singular[category]}</button></div></form>`,async form=>{
+  if(linked.length&&!form.elements.remove_assignments.checked)throw Error('Confirm removal of the linked teaching assignments, or reassign them first.');
+  const next=structuredClone(state.config);
+  next[category]=next[category].filter(i=>i.id!==identifier);
+  if(linked.length)next.offerings=next.offerings.filter(o=>o.subject_id!==identifier);
+  await saveConfig(next);closeModal();render();toast(linked.length?'Subject and linked assignments deleted.':'Record deleted.');
  });
 }
 
@@ -249,7 +255,7 @@ async function action(name,node){
  if(name==='tab'){state.tab=node.dataset.tab;state.search='';render();return;}
  if(name==='add'||name==='edit'){editModal(node.dataset.id);return;}
  if(name==='delete'){deleteModal(node.dataset.id);return;}
- if(name==='view-group'||name==='view-teacher'){state.view=name==='view-group'?'group':'teacher';state.target='';render();return;}
+ if(['view-group','view-teacher','view-classroom','view-lab'].includes(name)){state.view=name.slice(5);state.target='';state.batch='';render();return;}
  if(name==='sample'){
   const response=await fetch('/api/sample.csv');if(!response.ok)throw new Error('Could not load sample data.');
   await previewFile(new File([await response.blob()],'unisched_semesters_3_5_7.csv',{type:'text/csv'}));return;

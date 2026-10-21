@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 from .analytics import analyze
 from .domain import Configuration
-from .resources import eligible_rooms
+from .resources import eligible_rooms, booking_key, booking_members
 
 
 def status():
@@ -27,10 +27,24 @@ def room_options(record, index):
     room_map={r.id:r for r in config.rooms}
     eligible={r.id for r in eligible_rooms(config,offering,entry['kind'])}
     original=analyze(record)
+    if entry['room_id'] is None:
+        periods=config.settings.periods()
+        return {'session_index':index,'subject':subject.name,'code':subject.code,'kind':entry['kind'],
+            'division':group.division,'semester':group.semester,'batch':None,'day':config.settings.days[entry['day']],
+            'start':periods[entry['slot']][0],'end':periods[entry['slot']+entry['duration']-1][1],
+            'current_room':'No room — independent project','alternatives':[],'rejected':[],
+            'note':'This is reserved independent project time. No professor or room is booked; it is not a missing assignment.',
+            'classroom_changes_before':original['classroom_optimization']['classroom_changes'],
+            'early_classroom_changes_before':original['classroom_optimization']['early_changes']}
+    members=booking_members(config,offering,entry['kind'])
+    member_ids={o.id for o in members}
+    shared_indices={i for i,e in enumerate(entries) if e['offering_id'] in member_ids and e['kind']==entry['kind'] and (e['day'],e['slot'])==(entry['day'],entry['slot'])}
+
     alternatives=[];rejected=[]
     size=next(b.strength for b in config.batches if b.id==entry['batch_id']) if entry.get('batch_id') else group.strength
+    if len(members)>1: size=sum(next(b.strength for b in config.batches if b.id==o.batch_id) for o in members)
     expected=room_map[entry['room_id']].kind
-    fixed=group.room_id if entry['kind']=='lecture' else (offering.project_room_id or offering.lab_room_id) if entry['kind']=='project' else offering.lab_room_id
+    fixed=offering.tutorial_room_id if entry['kind']=='tutorial' else group.room_id if entry['kind']=='lecture' else (offering.project_room_id or offering.lab_room_id) if entry['kind']=='project' else offering.lab_room_id
     for room in config.rooms:
         if room.id==entry['room_id'] or room.kind!=expected:
             continue
@@ -39,12 +53,13 @@ def room_options(record, index):
         if room.department_id not in (None,group.department_id): reasons.append('not eligible for this department')
         if room.eligible_years and (group.semester+1)//2 not in room.eligible_years: reasons.append('not eligible for this academic year')
         if fixed and room.id!=fixed: reasons.append('the assignment fixes another room; change academic data and regenerate first')
-        collisions=[e for i,e in enumerate(entries) if i!=index and e['room_id']==room.id and e['day']==entry['day']
+        collisions=[e for i,e in enumerate(entries) if i not in shared_indices and e['room_id']==room.id and e['day']==entry['day']
                     and e['slot']<entry['slot']+entry['duration'] and entry['slot']<e['slot']+e['duration']]
         if collisions: reasons.append(f'already occupied by {len(collisions)} overlapping session(s) in this saved plan')
         if original['hard_conflicts']: reasons.append('the original plan has unresolved audit violations')
         if room.id in eligible and not reasons:
-            candidate=deepcopy(record);candidate['result']['entries'][index]['room_id']=room.id
+            candidate=deepcopy(record)
+            for i in shared_indices: candidate['result']['entries'][i]['room_id']=room.id
             audit=analyze(candidate)
             if audit['hard_conflicts']:
                 reasons.extend(audit['violations'])
@@ -100,16 +115,17 @@ def local_advice(records, question, entry_index=None):
             'start':periods[e['slot']][0],'end':periods[e['slot']+e['duration']-1][1],
             'department':departments[groups[e['group_id']].department_id].code,'division':groups[e['group_id']].division,'semester':groups[e['group_id']].semester,
             'subject':subjects[e['subject_id']].name,'code':subjects[e['subject_id']].code,
-            'teacher':teachers[e['teacher_id']].name,'room':rooms[e['room_id']].name,'kind':e['kind'],
+            'teacher':teachers[e['teacher_id']].name if e['teacher_id'] else 'Independent project','room':rooms[e['room_id']].name if e['room_id'] else 'No room','kind':e['kind'],
             'batch':batches[e['batch_id']].name if e.get('batch_id') else 'Whole division'}
             for i,e in enumerate(selected['result']['entries'])]
     if len(records)==1 and records[0]['result']['status']=='feasible' and entry_index is not None:
         check=room_options(records[0],entry_index);facts['room_check']=check
         lines += [f"Selected session: {check['code']} {check['subject']} on {check['day']} {check['start']}–{check['end']}, currently {check['current_room']}."]
+        if check.get('note'): lines.append(check['note'])
         if check['alternatives']:
             lines.append('Verified replacement rooms:')
             lines.extend(f"• {r['room']} ({r['capacity']} seats): {r['reason']} Classroom changes after this move: {r['classroom_changes_after']} ({r['early_classroom_changes_after']} early changes)." for r in check['alternatives'])
-        else:
+        elif not check.get('note'):
             lines.append('No replacement room passes all current constraints at this time. Do not move the session into an occupied or ineligible room.')
         if check['rejected']:
             lines.append('Rooms ruled out:')
